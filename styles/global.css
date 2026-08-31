@@ -58,9 +58,17 @@ body {
   background-color: var(--bg-color);
 }
 
-/* Hide floating side social icons and footer social icons */
+/* Hide floating side social buttons, footer social icons, and author links */
 .notion-social,
-[class*='social'],
-[class*='Social'] {
+footer [class*='social'],
+div[class*='social'],
+aside[class*='social'],
+a[href*='twitter.com'],
+a[href*='x.com'],
+a[href*='github.com'],
+a[href*='linkedin.com'] {
   display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
 }
