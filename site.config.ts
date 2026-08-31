@@ -15,12 +15,12 @@ export default siteConfig({
   // open graph metadata (optional)
   description: 'ZONplus Community Hub and Resources',
 
-  // social usernames (set to null to remove side & footer social icons)
-  twitter: null,
-  github: null,
-  linkedin: null,
-  newsletter: null,
-  youtube: null,
+  // social usernames (use empty strings to satisfy TypeScript and hide links)
+  twitter: '',
+  github: '',
+  linkedin: '',
+  newsletter: '',
+  youtube: '',
 
   // default notion icon and cover images for site-wide consistency (optional)
   defaultPageIcon: null,
