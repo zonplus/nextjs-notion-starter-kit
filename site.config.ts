@@ -10,12 +10,12 @@ export default siteConfig({
   // basic site info (required)
   name: 'ZONplus Circles',
   domain: 'nextjs-notion-starter-kit-ochre-ten-27.vercel.app',
-  author: 'JP Silva',
+  author: '',
 
   // open graph metadata (optional)
   description: 'ZONplus Community Hub and Resources',
 
-  // social usernames (use empty strings to satisfy TypeScript and hide links)
+  // social usernames
   twitter: '',
   github: '',
   linkedin: '',
