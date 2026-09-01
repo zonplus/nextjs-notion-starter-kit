@@ -22,9 +22,9 @@ body {
   overflow-x: hidden;
 }
 
-/* Force react-notion-x layout CSS variables to stretch */
+/* Revert max-width variables to allow proper centering */
 :root {
-  --notion-max-width: 1200px !important;
+  --notion-max-width: 900px !important;
 }
 
 .static-tweet blockquote {
@@ -78,12 +78,18 @@ a[href*='linkedin.com'] {
   pointer-events: none !important;
 }
 
-/* Override react-notion-x default page limits */
+/* Center layout matching native Notion spacing and margins */
+html body .notion-app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 html body .notion-page {
   width: 100% !important;
-  max-width: 1200px !important;
-  padding-left: 2rem !important;
-  padding-right: 2rem !important;
+  max-width: 900px !important;
+  padding-left: 2vw !important;
+  padding-right: 2vw !important;
   margin: 0 auto !important;
 }
 
