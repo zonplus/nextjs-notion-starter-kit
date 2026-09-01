@@ -228,8 +228,10 @@ export function NotionPage({
 
   const title = getBlockTitle(block, recordMap) || site.name
 
-  // Root landing page detection logic
-  const isRootPage = parsePageId(pageId) === parsePageId(site.rootNotionPageId)
+  // Root landing page detection logic (checks ID match OR if the title is your main landing page)
+const isRootPage = 
+  parsePageId(pageId) === parsePageId(site.rootNotionPageId) || 
+  title.toLowerCase().includes('zonplus circles')
 
   // Strip emojis, non-alphanumeric characters, and trim to match Flarum tag slug (e.g., "📌 Pinboard" -> "pinboard")
   const tag = title.replace(/[^\w\s-]/gi, '').toLowerCase().trim()
