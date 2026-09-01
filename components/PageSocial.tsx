@@ -1,35 +1,25 @@
 'use client'
+import * as React from 'react'
 
-import React from 'react'
+export function PageSocial({ tag }: { tag: string }) {
+  const [isRoot, setIsRoot] = React.useState(true)
 
-interface PageSocialProps {
-  forumUrl?: string
-  tag?: string
-}
+  React.useEffect(() => {
+    // If the window pathname is just '/' or empty, we are on the homepage
+    const path = window.location.pathname
+    if (path && path !== '/' && path !== '') {
+      setIsRoot(false)
+    } else {
+      setIsRoot(true)
+    }
+  }, [])
 
-export const PageSocial: React.FC<PageSocialProps> = ({
-  forumUrl = 'https://zonpluscircles.freeflarum.com/',
-  tag
-}) => {
-  // Optional: If you want to append the tag to the forum URL or handle it:
-  // const targetUrl = tag ? `${forumUrl}?tag=${tag}` : forumUrl
+  // If we are on the root homepage, render nothing at all
+  if (isRoot) {
+    return null
+  }
 
   return (
-    <div style={{ width: '100%', marginTop: '2rem', minHeight: '700px' }}>
-      <iframe
-        src={forumUrl}
-        style={{
-          width: '100%',
-          height: '750px',
-          border: 'none',
-          borderRadius: '8px',
-          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)'
-        }}
-        title="ZONplus Circles Forum"
-        allow="camera; microphone; clipboard-write; encrypted-media"
-      />
-    </div>
+    // ... keep your existing return/JSX layout for PageSocial here ...
   )
 }
-
-export default PageSocial
