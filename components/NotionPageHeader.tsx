@@ -3,9 +3,9 @@
 import type * as types from 'notion-types'
 import cs from 'classnames'
 import * as React from 'react'
-import { Breadcrumbs, Header, Search, useNotionContext } from 'react-notion-x'
+import { Breadcrumbs, Search, useNotionContext } from 'react-notion-x'
 
-import { isSearchEnabled, navigationLinks, navigationStyle } from '@/lib/config'
+import { isSearchEnabled, navigationLinks } from '@/lib/config'
 import { MoonIcon } from '@/lib/icons/moon'
 import { SunIcon } from '@/lib/icons/sun'
 import { useDarkMode } from '@/lib/use-dark-mode'
@@ -47,14 +47,10 @@ export function NotionPageHeader({
     }
   }, [])
 
-  if (navigationStyle === 'default') {
-    return <Header block={block} />
-  }
-
   return (
     <header className='notion-header'>
       <div className='notion-nav-header'>
-        {/* On homepage, omit the title breadcrumbs completely */}
+        {/* On homepage, omit title breadcrumbs completely */}
         {!isRoot ? <Breadcrumbs block={block} rootOnly={true} /> : <div style={{ width: '1px' }} />}
 
         <div className='notion-nav-header-rhs breadcrumbs'>
