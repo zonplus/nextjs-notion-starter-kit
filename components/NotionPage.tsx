@@ -225,9 +225,12 @@ export function NotionPage({
   )
 
   const title = getBlockTitle(block, recordMap) || site.name
+  const normalizedTitle = title.toLowerCase().trim()
 
-  // Match target board paths or unique Notion page identifiers
+  // Match based on Notion page block title or path/pageId fallbacks
+  const targetBoards = ['toolboard', 'grantboard', 'pinboard', 'chatboard']
   const showForum =
+    targetBoards.includes(normalizedTitle) ||
     pathname?.toLowerCase().includes('toolboard') ||
     pathname?.toLowerCase().includes('grantboard') ||
     pathname?.toLowerCase().includes('pinboard') ||
@@ -261,7 +264,7 @@ export function NotionPage({
         footer={<Footer />}
       />
 
-      {/* Render centered FreeFlarum forum iframe when matching target board pages */}
+      {/* Render centered FreeFlarum forum iframe when matching target board titles */}
       {showForum && (
         <div style={{ width: '100%', maxWidth: '1200px', margin: '40px auto 0 auto', padding: '0 20px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <div style={{ width: '100%', height: '700px', border: '1px solid rgba(0, 0, 0, 0.1)', borderRadius: '8px', overflow: 'hidden', backgroundColor: '#fff' }}>
