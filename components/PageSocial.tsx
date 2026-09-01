@@ -2,8 +2,29 @@
 
 import React from 'react'
 
-export const PageSocial: React.FC = () => {
-  return null
+interface PageSocialProps {
+  forumUrl?: string
+}
+
+export const PageSocial: React.FC<PageSocialProps> = ({
+  forumUrl = 'https://zonpluscircles.freeflarum.com/'
+}) => {
+  return (
+    <div style={{ width: '100%', marginTop: '2rem', minHeight: '700px' }}>
+      <iframe
+        src={forumUrl}
+        style={{
+          width: '100%',
+          height: '750px',
+          border: 'none',
+          borderRadius: '8px',
+          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)'
+        }}
+        title="ZONplus Circles Forum"
+        allow="camera; microphone; clipboard-write; encrypted-media"
+      />
+    </div>
+  )
 }
 
 export default PageSocial
