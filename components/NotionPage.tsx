@@ -228,10 +228,13 @@ export function NotionPage({
 
   const title = getBlockTitle(block, recordMap) || site.name
 
-  // Root landing page detection logic (checks ID match OR if the title is your main landing page)
-const isRootPage = 
-  parsePageId(pageId) === parsePageId(site.rootNotionPageId) || 
-  title.toLowerCase().includes('zonplus circles')
+  // Root landing page detection logic (compares parsed IDs and checks title)
+  const cleanPageId = parsePageId(pageId)
+  const cleanRootId = parsePageId(site.rootNotionPageId)
+  const isRootPage =
+    cleanPageId === cleanRootId ||
+    !cleanPageId ||
+    title.toLowerCase().includes('zonplus circles')
 
   // Strip emojis, non-alphanumeric characters, and trim to match Flarum tag slug (e.g., "📌 Pinboard" -> "pinboard")
   const tag = title.replace(/[^\w\s-]/gi, '').toLowerCase().trim()
@@ -242,6 +245,9 @@ const isRootPage =
       title,
       pageId,
       rootNotionPageId: site.rootNotionPageId,
+      cleanPageId,
+      cleanRootId,
+      isRootPage,
       recordMap
     })
 
@@ -249,7 +255,7 @@ const isRootPage =
     g.pageId = pageId
     g.recordMap = recordMap
     g.block = block
-  }, [block, pageId, recordMap, site.rootNotionPageId, title])
+  }, [block, pageId, recordMap, site.rootNotionPageId, title, cleanPageId, cleanRootId, isRootPage])
 
   return (
     <>
