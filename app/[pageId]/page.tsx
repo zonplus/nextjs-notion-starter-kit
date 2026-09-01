@@ -17,6 +17,15 @@ export const revalidate = 10
 export const dynamic = 'force-dynamic'
 export const dynamicParams = true
 
+const targetBoardIds = [
+  '3ceee6ae553b80f3beeadcc0742eb045', // Toolboard
+  '3ceee6ae553b8056b22edd909831dfd1', // Grantboard
+  '3ceee6ae553b80eaa4cfcca4c6b07b59', // Pinboard
+  '3ceee6ae553b809b928dd08b834b5606'  // Chatboard
+]
+
+const targetSlugs = ['toolboard', 'grantboard', 'pinboard', 'chatboard']
+
 export async function generateStaticParams() {
   if (isDev) {
     return []
@@ -37,16 +46,9 @@ export async function generateMetadata({
   params
 }: DynamicPageProps): Promise<Metadata> {
   const { pageId } = await params
-  const cleanedId = pageId?.replace(/-/g, '')
+  const cleanedId = pageId?.replace(/-/g, '').toLowerCase()
 
-  const targetBoardIds = [
-    '3ceee6ae553b80f3beeadcc0742eb045',
-    '3ceee6ae553b8056b22edd909831dfd1',
-    '3ceee6ae553b80eaa4cfcca4c6b07b59',
-    '3ceee6ae553b809b928dd08b834b5606'
-  ]
-
-  if (targetBoardIds.includes(cleanedId)) {
+  if (targetBoardIds.includes(cleanedId) || targetSlugs.some(slug => cleanedId?.includes(slug))) {
     return {
       title: 'ZONplus Circles Forum',
       description: 'Collaborative discussion board'
@@ -58,20 +60,15 @@ export async function generateMetadata({
 
 export default async function DynamicPage({ params }: DynamicPageProps) {
   const { pageId } = await params
-  const cleanedId = pageId?.replace(/-/g, '')
+  const cleanedId = pageId?.replace(/-/g, '').toLowerCase()
 
-  const targetBoardIds = [
-    '3ceee6ae553b80f3beeadcc0742eb045', // Toolboard
-    '3ceee6ae553b8056b22edd909831dfd1', // Grantboard
-    '3ceee6ae553b80eaa4cfcca4c6b07b59', // Pinboard
-    '3ceee6ae553b809b928dd08b834b5606'  // Chatboard
-  ]
+  const isTargetBoard = 
+    targetBoardIds.includes(cleanedId) || 
+    targetSlugs.some(slug => cleanedId?.includes(slug))
 
-  // If this is one of our four target board pages, serve the custom forum layout directly
-  if (targetBoardIds.includes(cleanedId)) {
+  if (isTargetBoard) {
     return (
       <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', width: '100vw', margin: 0, padding: 0, overflow: 'hidden', backgroundColor: 'var(--bg-color, #fff)' }}>
-        {/* Top minimal bar to navigate back home */}
         <div style={{ display: 'flex', alignItems: 'center', padding: '10px 20px', borderBottom: '1px solid rgba(0,0,0,0.1)' }}>
           <Link 
             href="/" 
@@ -81,7 +78,6 @@ export default async function DynamicPage({ params }: DynamicPageProps) {
           </Link>
         </div>
 
-        {/* Embedded FreeFlarum Forum */}
         <iframe 
           src="https://zonpluscircles.freeflarum.com" 
           title="ZONplus Circles Forum"
