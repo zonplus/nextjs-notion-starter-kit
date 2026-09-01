@@ -54,6 +54,7 @@ export function NotionPageHeader({
   return (
     <header className='notion-header'>
       <div className='notion-nav-header'>
+        {/* On nested pages, show the Home icon. On root, show a spacer. */}
         {!isRoot ? (
           <components.PageLink
             href="/"
@@ -80,6 +81,7 @@ export function NotionPageHeader({
           <div style={{ width: '1px' }} />
         )}
 
+        {/* Right-hand side navigation links & theme toggle styled consistently */}
         <div className='notion-nav-header-rhs breadcrumbs'>
           {navigationLinks
             ?.map((link, index) => {
@@ -103,6 +105,8 @@ export function NotionPageHeader({
                     href={link.url}
                     key={index}
                     className={cs(styles.navLink, 'breadcrumb', 'button')}
+                    target='_blank'
+                    rel='noopener noreferrer'
                   >
                     {link.title}
                   </components.Link>
