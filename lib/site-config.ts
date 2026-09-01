@@ -1,4 +1,4 @@
-import { siteConfig } from './lib/site-config'
+import { siteConfig } from '@/lib/site-config'
 
 export default siteConfig({
   rootNotionPageId: '3cdee6ae553b80c79e80e904ec1992ae',
@@ -8,7 +8,7 @@ export default siteConfig({
   domain: 'nextjs-notion-starter-kit-ochre-ten-27.vercel.app',
   author: '',
 
-  description: 'ZONplus Community Hub and Resources',
+  description: 'ZONplus Circles',
 
   twitter: '',
   github: '',
