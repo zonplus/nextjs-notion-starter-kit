@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 
 import { NotionPageRoute } from '@/components/NotionPageRoute'
 import { getPageData } from '@/lib/get-page-data'
@@ -35,13 +36,60 @@ export async function generateMetadata({
   params
 }: DynamicPageProps): Promise<Metadata> {
   const { pageId } = await params
+  const cleanedId = pageId?.replace(/-/g, '')
+
+  const targetBoardIds = [
+    '3ceee6ae553b80f3beeadcc0742eb045',
+    '3ceee6ae553b8056b22edd909831dfd1',
+    '3ceee6ae553b80eaa4cfcca4c6b07b59',
+    '3ceee6ae553b809b928dd08b834b5606'
+  ]
+
+  if (targetBoardIds.includes(cleanedId)) {
+    return {
+      title: 'ZONplus Circles Forum',
+      description: 'Collaborative discussion board'
+    }
+  }
 
   return createPageMetadata(await getPageData(pageId))
 }
 
 export default async function DynamicPage({ params }: DynamicPageProps) {
   const { pageId } = await params
-  const pageProps = await getPageData(pageId)
+  const cleanedId = pageId?.replace(/-/g, '')
 
+  const targetBoardIds = [
+    '3ceee6ae553b80f3beeadcc0742eb045', // Toolboard
+    '3ceee6ae553b8056b22edd909831dfd1', // Grantboard
+    '3ceee6ae553b80eaa4cfcca4c6b07b59', // Pinboard
+    '3ceee6ae553b809b928dd08b834b5606'  // Chatboard
+  ]
+
+  // If this is one of our four target board pages, serve the custom forum layout directly
+  if (targetBoardIds.includes(cleanedId)) {
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', width: '100vw', margin: 0, padding: 0, overflow: 'hidden', backgroundColor: 'var(--bg-color, #fff)' }}>
+        {/* Top minimal bar to navigate back home */}
+        <div style={{ display: 'flex', alignItems: 'center', padding: '10px 20px', borderBottom: '1px solid rgba(0,0,0,0.1)' }}>
+          <Link 
+            href="/" 
+            style={{ display: 'flex', alignItems: 'center', gap: '6px', textDecoration: 'none', fontWeight: 500, color: 'inherit', fontSize: '14px' }}
+          >
+            🏠 Home
+          </Link>
+        </div>
+
+        {/* Embedded FreeFlarum Forum */}
+        <iframe 
+          src="https://zonpluscircles.freeflarum.com" 
+          title="ZONplus Circles Forum"
+          style={{ flex: 1, width: '100%', border: 'none' }}
+        />
+      </div>
+    )
+  }
+
+  const pageProps = await getPageData(pageId)
   return <NotionPageRoute pageProps={pageProps} />
 }
