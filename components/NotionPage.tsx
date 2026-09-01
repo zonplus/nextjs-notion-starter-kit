@@ -242,6 +242,8 @@ export function NotionPage({
     <>
       {isLiteMode && <BodyClassName className='notion-lite' />}
 
+      <InlineSearch />
+
       <NotionRenderer
         darkMode={isDarkMode}
         components={notionRendererComponents}
@@ -270,7 +272,7 @@ export function NotionPage({
         </div>
       )}
 
-<GitHubShareButton />
+      <GitHubShareButton />
     </>
   )
 }
