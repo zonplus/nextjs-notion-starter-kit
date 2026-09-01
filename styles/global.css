@@ -110,3 +110,10 @@ html body .notion-page-aside {
   width: 0 !important;
   min-width: 0 !important;
 }
+
+/* Hide duplicate top-left title breadcrumb and search trigger on the homepage */
+body.index-page .notion-header .notion-nav-header > div:first-child,
+body.index-page .notion-header .search-button,
+body.index-page .notion-nav-header-rhs .breadcrumb:has(svg) {
+  display: none !important;
+}
