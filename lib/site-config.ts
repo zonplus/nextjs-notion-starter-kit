@@ -1,4 +1,32 @@
-export function siteConfig(config: any) {
+export interface NavigationLink {
+  title: string
+  pageId?: string
+  url?: string
+}
+
+export interface SiteConfig {
+  rootNotionPageId: string
+  rootNotionSpaceId?: string | null
+  name: string
+  domain: string
+  author: string
+  description?: string
+  twitter?: string
+  github?: string
+  linkedin?: string
+  newsletter?: string
+  youtube?: string
+  defaultPageIcon?: string | null
+  defaultPageCover?: string | null
+  defaultPageCoverPosition?: number
+  isPreviewImageSupportEnabled?: boolean
+  isRedisEnabled?: boolean
+  pageUrlOverrides?: Record<string, string> | null
+  navigationStyle?: 'default' | 'custom'
+  navigationLinks?: NavigationLink[]
+}
+
+export function siteConfig(config: SiteConfig): SiteConfig {
   return config
 }
 
