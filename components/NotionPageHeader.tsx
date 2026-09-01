@@ -1,9 +1,9 @@
 import type * as types from 'notion-types'
 import cs from 'classnames'
 import * as React from 'react'
-import { Breadcrumbs, Header, Search, useNotionContext } from 'react-notion-x'
+import { Header, useNotionContext } from 'react-notion-x'
 
-import { isSearchEnabled, navigationLinks, navigationStyle } from '@/lib/config'
+import { navigationLinks, navigationStyle } from '@/lib/config'
 import { MoonIcon } from '@/lib/icons/moon'
 import { SunIcon } from '@/lib/icons/sun'
 import { useDarkMode } from '@/lib/use-dark-mode'
@@ -41,7 +41,8 @@ export function NotionPageHeader({
   return (
     <header className='notion-header'>
       <div className='notion-nav-header'>
-        <Breadcrumbs block={block} rootOnly={true} />
+        {/* Left side breadcrumbs removed to prevent title repetition */}
+        <div style={{ width: '1px' }} />
 
         <div className='notion-nav-header-rhs breadcrumbs'>
           {navigationLinks
@@ -75,8 +76,7 @@ export function NotionPageHeader({
             .filter(Boolean)}
 
           <ToggleThemeButton />
-
-          {isSearchEnabled && <Search block={block} title={null} />}
+          {/* Search popup removed from top right */}
         </div>
       </div>
     </header>
