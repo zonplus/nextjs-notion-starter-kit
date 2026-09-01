@@ -196,16 +196,12 @@ export function NotionPage({
   pageId
 }: Required<Pick<types.PageProps, 'site' | 'recordMap' | 'pageId'>>) {
   const lite = useSearchParam('lite')
-
-  // lite mode is for oembed
   const isLiteMode = lite === 'true'
-
   const { isDarkMode } = useDarkMode()
 
   const siteMapPageUrl = React.useMemo(() => {
     const params: any = {}
     if (lite) params.lite = lite
-
     const searchParams = new URLSearchParams(params)
     return mapPageUrl(site, recordMap, searchParams)
   }, [site, recordMap, lite])
@@ -228,22 +224,17 @@ export function NotionPage({
 
   const title = getBlockTitle(block, recordMap) || site.name
 
-  // Strict path enforcement: default to true (root) during SSR, then verify actual pathname on client
-  const [isClientPathRoot, setIsClientPathRoot] = React.useState(true)
+  // Absolute client-side pathname check
+  const [isSubPage, setIsSubPage] = React.useState(false)
 
   React.useEffect(() => {
     const path = window.location.pathname
-    // If the path is anything other than root '/' or empty, it's a sub-page
+    // If we are explicitly on a sub-route (not root '/' or empty)
     if (path && path !== '/' && path !== '') {
-      setIsClientPathRoot(false)
-    } else {
-      setIsClientPathRoot(true)
+      setIsSubPage(true)
     }
   }, [])
 
-  const isRootPage = isClientPathRoot
-
-  // Strip emojis, non-alphanumeric characters, and trim to match Flarum tag slug
   const tag = title.replace(/[^\w\s-]/gi, '').toLowerCase().trim()
 
   return (
@@ -251,7 +242,6 @@ export function NotionPage({
       {isLiteMode && <BodyClassName className='notion-lite' />}
 
       <NotionRenderer
-        bodyClassName={cs(isRootPage && 'index-page')}
         darkMode={isDarkMode}
         components={notionRendererComponents}
         recordMap={recordMap}
@@ -272,14 +262,14 @@ export function NotionPage({
         footer={<Footer />}
       />
 
-      {/* Render full-width embedded board on nested sub-pages only */}
-      {!isRootPage && (
+      {/* ONLY render PageSocial if we have positively verified we are on a subpage */}
+      {isSubPage && (
         <div style={{ width: '100%', maxWidth: '1200px', margin: '2rem auto 0 auto', padding: '0 1rem' }}>
           <PageSocial tag={tag} />
         </div>
       )}
 
-      <GitHubShareButton />
+<GitHubShareButton />
     </>
   )
 }
