@@ -4,11 +4,16 @@ import React from 'react'
 
 interface PageSocialProps {
   forumUrl?: string
+  tag?: string
 }
 
 export const PageSocial: React.FC<PageSocialProps> = ({
-  forumUrl = 'https://zonpluscircles.freeflarum.com/'
+  forumUrl = 'https://zonpluscircles.freeflarum.com/',
+  tag
 }) => {
+  // Optional: If you want to append the tag to the forum URL or handle it:
+  // const targetUrl = tag ? `${forumUrl}?tag=${tag}` : forumUrl
+
   return (
     <div style={{ width: '100%', marginTop: '2rem', minHeight: '700px' }}>
       <iframe
