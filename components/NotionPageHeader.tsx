@@ -3,9 +3,9 @@
 import type * as types from 'notion-types'
 import cs from 'classnames'
 import * as React from 'react'
-import { Breadcrumbs, Search, useNotionContext } from 'react-notion-x'
+import { Breadcrumbs, useNotionContext } from 'react-notion-x'
 
-import { isSearchEnabled, navigationLinks } from '@/lib/config'
+import { navigationLinks } from '@/lib/config'
 import { MoonIcon } from '@/lib/icons/moon'
 import { SunIcon } from '@/lib/icons/sun'
 import { useDarkMode } from '@/lib/use-dark-mode'
@@ -23,6 +23,7 @@ function ToggleThemeButton() {
     <div
       className={cs('breadcrumb', 'button', !hasMounted && styles.hidden)}
       onClick={onToggleTheme}
+      title="Toggle theme"
     >
       {hasMounted && isDarkMode ? <MoonIcon /> : <SunIcon />}
     </div>
@@ -50,8 +51,18 @@ export function NotionPageHeader({
   return (
     <header className='notion-header'>
       <div className='notion-nav-header'>
-        {/* On homepage, omit title breadcrumbs completely */}
-        {!isRoot ? <Breadcrumbs block={block} rootOnly={true} /> : <div style={{ width: '1px' }} />}
+        {/* On root, show nothing or minimal placeholder. On nested pages, show a Home button. */}
+        {!isRoot ? (
+          <components.PageLink
+            href="/"
+            className={cs(styles.navLink, 'breadcrumb', 'button')}
+            style={{ display: 'flex', alignItems: 'center', gap: '6px', fontWeight: 500 }}
+          >
+            🏠 Home
+          </components.PageLink>
+        ) : (
+          <div style={{ width: '1px' }} />
+        )}
 
         <div className='notion-nav-header-rhs breadcrumbs'>
           {navigationLinks
@@ -84,10 +95,8 @@ export function NotionPageHeader({
             })
             .filter(Boolean)}
 
+          {/* Single clean dark mode toggle in the header */}
           <ToggleThemeButton />
-
-          {/* Omit the search popup button on the homepage */}
-          {!isRoot && isSearchEnabled && <Search block={block} title={null} />}
         </div>
       </div>
     </header>
