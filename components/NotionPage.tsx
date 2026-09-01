@@ -228,24 +228,13 @@ export function NotionPage({
 
   const title = getBlockTitle(block, recordMap) || site.name
 
-  // Explicit path and title check for landing page recognition
-  const [isClientRoot, setIsClientRoot] = React.useState(false)
-
-  React.useEffect(() => {
-    const path = window.location.pathname
-    // If we are at the root path '/'
-    if (path === '/' || path === '') {
-      setIsClientRoot(true)
-    }
-  }, [])
-
   const cleanPageId = parsePageId(pageId)
   const cleanRootId = parsePageId(site.rootNotionPageId)
 
-  // Force true if path is root, title matches main landing page, or IDs match
+  // Reliable root check that works both on server and client
   const isRootPage =
-    isClientRoot ||
     cleanPageId === cleanRootId ||
+    parsePageId(keys[0] || '') === cleanRootId ||
     title.toLowerCase().includes('zonplus circles')
 
   // Strip emojis, non-alphanumeric characters, and trim to match Flarum tag slug
