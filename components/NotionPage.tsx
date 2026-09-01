@@ -228,14 +228,20 @@ export function NotionPage({
 
   const title = getBlockTitle(block, recordMap) || site.name
 
-  const cleanPageId = parsePageId(pageId)
-  const cleanRootId = parsePageId(site.rootNotionPageId)
+  // Strict path enforcement: default to true (root) during SSR, then verify actual pathname on client
+  const [isClientPathRoot, setIsClientPathRoot] = React.useState(true)
 
-  // Reliable root check that works both on server and client
-  const isRootPage =
-    cleanPageId === cleanRootId ||
-    parsePageId(keys[0] || '') === cleanRootId ||
-    title.toLowerCase().includes('zonplus circles')
+  React.useEffect(() => {
+    const path = window.location.pathname
+    // If the path is anything other than root '/' or empty, it's a sub-page
+    if (path && path !== '/' && path !== '') {
+      setIsClientPathRoot(false)
+    } else {
+      setIsClientPathRoot(true)
+    }
+  }, [])
+
+  const isRootPage = isClientPathRoot
 
   // Strip emojis, non-alphanumeric characters, and trim to match Flarum tag slug
   const tag = title.replace(/[^\w\s-]/gi, '').toLowerCase().trim()
