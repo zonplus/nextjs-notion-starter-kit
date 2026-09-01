@@ -1,20 +1,16 @@
 'use client'
 
 import * as React from 'react'
+import { usePathname } from 'next/navigation'
 
-export function BoardForumEmbed({ pageId }: { pageId: string }) {
-  const targetPageIds = [
-    '3ceee6ae553b80f3beeadcc0742eb045', // Toolboard
-    '3ceee6ae553b8056b22edd909831dfd1', // Grantboard
-    '3ceee6ae553b80eaa4cfcca4c6b07b59', // Pinboard
-    '3ceee6ae553b809b928dd08b834b5606'  // Chatboard
-  ]
+export function BoardForumEmbed() {
+  const pathname = usePathname()
+  const lowerPath = pathname?.toLowerCase() || ''
 
-  // Clean hyphens to guarantee a match against our raw target arrays
-  const cleanedPageId = pageId?.replace(/-/g, '')
-  const matches = targetPageIds.some((id) => cleanedPageId === id)
+  const targetBoards = ['toolboard', 'grantboard', 'pinboard', 'chatboard']
+  const isTargetBoard = targetBoards.some((board) => lowerPath.includes(board))
 
-  if (!matches) {
+  if (!isTargetBoard) {
     return null
   }
 
