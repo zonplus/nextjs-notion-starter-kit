@@ -1,4 +1,6 @@
-import { siteConfig } from '@/lib/site-config'
+export function siteConfig(config: any) {
+  return config
+}
 
 export default siteConfig({
   rootNotionPageId: '3cdee6ae553b80c79e80e904ec1992ae',
