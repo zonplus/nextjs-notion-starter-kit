@@ -43,7 +43,7 @@ export default siteConfig({
   navigationLinks: [
     {
       title: 'FreeFlarum',
-      url: 'https://your-community-url.freeflarum.com' // Replace with your actual FreeFlarum URL
+      url: 'https://zonpluscircles.freeflarum.com'
     }
   ]
 })
