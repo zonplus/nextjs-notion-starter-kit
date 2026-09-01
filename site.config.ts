@@ -37,5 +37,13 @@ export default siteConfig({
   pageUrlOverrides: null,
 
   // navigation style
-  navigationStyle: 'default'
+  navigationStyle: 'default',
+
+  // persistent header navigation links (shows on landing page and all nested pages)
+  navigationLinks: [
+    {
+      title: 'FreeFlarum',
+      url: 'https://your-community-url.freeflarum.com' // Replace with your actual FreeFlarum URL
+    }
+  ]
 })
