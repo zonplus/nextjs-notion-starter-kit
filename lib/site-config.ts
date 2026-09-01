@@ -1,46 +1,28 @@
-import type * as types from './types'
+import { siteConfig } from './lib/site-config'
 
-export interface SiteConfig {
-  rootNotionPageId: string
-  rootNotionSpaceId?: string | null
+export default siteConfig({
+  rootNotionPageId: '3cdee6ae553b80c79e80e904ec1992ae',
+  rootNotionSpaceId: null,
 
-  name: string
-  domain: string
-  author: string
-  description?: string
-  language?: string
+  name: 'ZONplus Circles',
+  domain: 'nextjs-notion-starter-kit-ochre-ten-27.vercel.app',
+  author: '',
 
-  twitter?: string
-  github?: string
-  linkedin?: string
-  newsletter?: string
-  youtube?: string
-  zhihu?: string
-  mastodon?: string
+  description: 'ZONplus Community Hub and Resources',
 
-  defaultPageIcon?: string | null
-  defaultPageCover?: string | null
-  defaultPageCoverPosition?: number | null
+  twitter: '',
+  github: '',
+  linkedin: '',
+  newsletter: '',
+  youtube: '',
 
-  isPreviewImageSupportEnabled?: boolean
-  isTweetEmbedSupportEnabled?: boolean
-  isRedisEnabled?: boolean
-  isSearchEnabled?: boolean
+  defaultPageIcon: null,
+  defaultPageCover: null,
+  defaultPageCoverPosition: 0.5,
 
-  includeNotionIdInUrls?: boolean
-  pageUrlOverrides?: types.PageUrlOverridesMap | null
-  pageUrlAdditions?: types.PageUrlOverridesMap | null
+  isPreviewImageSupportEnabled: true,
+  isRedisEnabled: false,
 
-  navigationStyle?: types.NavigationStyle
-  navigationLinks?: Array<NavigationLink>
-}
-
-export interface NavigationLink {
-  title: string
-  pageId?: string
-  url?: string
-}
-
-export const siteConfig = (config: SiteConfig): SiteConfig => {
-  return config
-}
+  pageUrlOverrides: null,
+  navigationStyle: 'default'
+})
