@@ -228,10 +228,22 @@ export function NotionPage({
 
   const title = getBlockTitle(block, recordMap) || site.name
 
-  // Root landing page detection logic (compares parsed IDs and checks title)
+  // Robust root page detection (checks ID, title, and forces true if path is just root '/')
   const cleanPageId = parsePageId(pageId)
   const cleanRootId = parsePageId(site.rootNotionPageId)
+  
+  const [isClientRoot, setIsClientRoot] = React.useState(false)
+
+  React.useEffect(() => {
+    const path = window.location.pathname
+    // If the path is just root '/' or matches the root page ID string directly in the URL
+    if (path === '/' || path === '' || path === `/${cleanRootId}`) {
+      setIsClientRoot(true)
+    }
+  }, [cleanRootId])
+
   const isRootPage =
+    isClientRoot ||
     cleanPageId === cleanRootId ||
     !cleanPageId ||
     title.toLowerCase().includes('zonplus circles')
@@ -240,22 +252,16 @@ export function NotionPage({
   const tag = title.replace(/[^\w\s-]/gi, '').toLowerCase().trim()
 
   React.useEffect(() => {
-    console.log('notion page', {
-      isDev: config.isDev,
+    console.log('notion page debug', {
       title,
       pageId,
       rootNotionPageId: site.rootNotionPageId,
       cleanPageId,
       cleanRootId,
       isRootPage,
-      recordMap
+      pathname: typeof window !== 'undefined' ? window.location.pathname : 'SSR'
     })
-
-    const g = window as any
-    g.pageId = pageId
-    g.recordMap = recordMap
-    g.block = block
-  }, [block, pageId, recordMap, site.rootNotionPageId, title, cleanPageId, cleanRootId, isRootPage])
+  }, [title, pageId, site.rootNotionPageId, cleanPageId, cleanRootId, isRootPage])
 
   return (
     <>
