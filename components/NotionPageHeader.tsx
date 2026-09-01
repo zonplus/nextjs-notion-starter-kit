@@ -1,9 +1,11 @@
+'use client'
+
 import type * as types from 'notion-types'
 import cs from 'classnames'
 import * as React from 'react'
-import { Header, useNotionContext } from 'react-notion-x'
+import { Breadcrumbs, Header, Search, useNotionContext } from 'react-notion-x'
 
-import { navigationLinks, navigationStyle } from '@/lib/config'
+import { isSearchEnabled, navigationLinks, navigationStyle } from '@/lib/config'
 import { MoonIcon } from '@/lib/icons/moon'
 import { SunIcon } from '@/lib/icons/sun'
 import { useDarkMode } from '@/lib/use-dark-mode'
@@ -34,6 +36,17 @@ export function NotionPageHeader({
 }) {
   const { components, mapPageUrl } = useNotionContext()
 
+  const [isRoot, setIsRoot] = React.useState(true)
+
+  React.useEffect(() => {
+    const path = window.location.pathname
+    if (path && path !== '/' && path !== '') {
+      setIsRoot(false)
+    } else {
+      setIsRoot(true)
+    }
+  }, [])
+
   if (navigationStyle === 'default') {
     return <Header block={block} />
   }
@@ -41,8 +54,8 @@ export function NotionPageHeader({
   return (
     <header className='notion-header'>
       <div className='notion-nav-header'>
-        {/* Left side breadcrumbs removed to prevent title repetition */}
-        <div style={{ width: '1px' }} />
+        {/* On homepage, omit the title breadcrumbs completely */}
+        {!isRoot ? <Breadcrumbs block={block} rootOnly={true} /> : <div style={{ width: '1px' }} />}
 
         <div className='notion-nav-header-rhs breadcrumbs'>
           {navigationLinks
@@ -76,7 +89,9 @@ export function NotionPageHeader({
             .filter(Boolean)}
 
           <ToggleThemeButton />
-          {/* Search popup removed from top right */}
+
+          {/* Omit the search popup button on the homepage */}
+          {!isRoot && isSearchEnabled && <Search block={block} title={null} />}
         </div>
       </div>
     </header>
