@@ -224,14 +224,14 @@ export function NotionPage({
 
   const title = getBlockTitle(block, recordMap) || site.name
 
-  // Absolute client-side pathname check
-  const [isSubPage, setIsSubPage] = React.useState(false)
+  // Track target paths for forum embedding
+  const [showForum, setShowForum] = React.useState(false)
 
   React.useEffect(() => {
     const path = window.location.pathname
-    // If we are explicitly on a sub-route (not root '/' or empty)
-    if (path && path !== '/' && path !== '') {
-      setIsSubPage(true)
+    const targetPaths = ['/toolboard', '/grantboard', '/pinboard', '/chatboard']
+    if (targetPaths.some((p) => path.endsWith(p))) {
+      setShowForum(true)
     }
   }, [])
 
@@ -262,10 +262,16 @@ export function NotionPage({
         footer={<Footer />}
       />
 
-      {/* ONLY render PageSocial if we have positively verified we are on a subpage */}
-      {isSubPage && (
-        <div style={{ width: '100%', maxWidth: '1200px', margin: '2rem auto 0 auto', padding: '0 1rem' }}>
-          <PageSocial tag={tag} />
+      {/* Render centered FreeFlarum forum iframe specifically on the 4 target boards */}
+      {showForum && (
+        <div style={{ width: '100%', maxWidth: '1200px', margin: '40px auto 0 auto', padding: '0 20px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <div style={{ width: '100%', height: '700px', border: '1px solid rgba(0, 0, 0, 0.1)', borderRadius: '8px', overflow: 'hidden', backgroundColor: '#fff' }}>
+            <iframe 
+              src="https://zonpluscircles.freeflarum.com" 
+              title="ZONplus Circles Forum"
+              style={{ width: '100%', height: '100%', border: 'none' }}
+            />
+          </div>
         </div>
       )}
 
