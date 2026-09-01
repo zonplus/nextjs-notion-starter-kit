@@ -1,7 +1,7 @@
 'use client'
 import * as React from 'react'
 
-export function PageSocial({ tag }: { tag: string }) {
+export function PageSocial({ tag = '' }: { tag?: string }) {
   const [isRoot, setIsRoot] = React.useState(true)
 
   React.useEffect(() => {
