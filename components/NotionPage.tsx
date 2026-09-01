@@ -28,6 +28,7 @@ import { GitHubShareButton } from './GitHubShareButton'
 import { NotionPageHeader } from './NotionPageHeader'
 import { PageAside } from './PageAside'
 import { PageSocial } from './PageSocial'
+import { InlineSearch } from './InlineSearch'
 
 // -----------------------------------------------------------------------------
 // dynamic imports for optional components
