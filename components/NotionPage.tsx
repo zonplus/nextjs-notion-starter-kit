@@ -228,42 +228,28 @@ export function NotionPage({
 
   const title = getBlockTitle(block, recordMap) || site.name
 
-  // Ultimate root page detection logic
-  const cleanPageId = parsePageId(pageId)
-  const cleanRootId = parsePageId(site.rootNotionPageId)
-  const blockId = keys[0] ? parsePageId(keys[0]) : ''
-
+  // Explicit path and title check for landing page recognition
   const [isClientRoot, setIsClientRoot] = React.useState(false)
 
   React.useEffect(() => {
     const path = window.location.pathname
-    if (path === '/' || path === '' || path === `/${cleanRootId}`) {
+    // If we are at the root path '/'
+    if (path === '/' || path === '') {
       setIsClientRoot(true)
     }
-  }, [cleanRootId])
+  }, [])
 
+  const cleanPageId = parsePageId(pageId)
+  const cleanRootId = parsePageId(site.rootNotionPageId)
+
+  // Force true if path is root, title matches main landing page, or IDs match
   const isRootPage =
     isClientRoot ||
     cleanPageId === cleanRootId ||
-    blockId === cleanRootId ||
-    !cleanPageId ||
     title.toLowerCase().includes('zonplus circles')
 
-  // Strip emojis, non-alphanumeric characters, and trim to match Flarum tag slug (e.g., "📌 Pinboard" -> "pinboard")
+  // Strip emojis, non-alphanumeric characters, and trim to match Flarum tag slug
   const tag = title.replace(/[^\w\s-]/gi, '').toLowerCase().trim()
-
-  React.useEffect(() => {
-    console.log('notion page debug', {
-      title,
-      pageId,
-      rootNotionPageId: site.rootNotionPageId,
-      cleanPageId,
-      cleanRootId,
-      blockId,
-      isRootPage,
-      pathname: typeof window !== 'undefined' ? window.location.pathname : 'SSR'
-    })
-  }, [title, pageId, site.rootNotionPageId, cleanPageId, cleanRootId, blockId, isRootPage])
 
   return (
     <>
