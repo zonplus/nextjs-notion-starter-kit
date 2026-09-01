@@ -1,23 +1,35 @@
-import React from 'react'
-import Giscus from '@giscus/react'
+'use client'
+
+import React, { useEffect, useRef } from 'react'
 
 export const PageSocial: React.FC = () => {
+  const ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (!ref.current || ref.current.hasChildNodes()) return
+
+    const script = document.createElement('script')
+    script.src = 'https://giscus.app/client.js'
+    script.setAttribute('data-repo', 'zonplus/nextjs-notion-starter-kit')
+    script.setAttribute('data-repo-id', 'R_kgDOUKLABg')
+    script.setAttribute('data-category', 'General')
+    script.setAttribute('data-category-id', 'DIC_kwDOUKLABs4DEp2U')
+    script.setAttribute('data-mapping', 'pathname')
+    script.setAttribute('data-strict', '0')
+    script.setAttribute('data-reactions-enabled', '1')
+    script.setAttribute('data-emit-metadata', '0')
+    script.setAttribute('data-input-position', 'bottom')
+    script.setAttribute('data-theme', 'preferred_color_scheme')
+    script.setAttribute('data-lang', 'en')
+    script.setAttribute('crossOrigin', 'anonymous')
+    script.async = true
+
+    ref.current.appendChild(script)
+  }, [])
+
   return (
     <div style={{ marginTop: '4rem', width: '100%' }}>
-      <Giscus
-        id="comments"
-        repo="zonplus/nextjs-notion-starter-kit"
-        repoId="PASTE_YOUR_REPO_ID_HERE"
-        category="General"
-        categoryId="PASTE_YOUR_CATEGORY_ID_HERE"
-        mapping="pathname"
-        reactionsEnabled="1"
-        emitMetadata="0"
-        inputPosition="top"
-        theme="light"
-        lang="en"
-        loading="lazy"
-      />
+      <div ref={ref} />
     </div>
   )
 }
