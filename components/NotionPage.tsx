@@ -23,6 +23,7 @@ import { mapImageUrl } from '@/lib/map-image-url'
 import { mapPageUrl } from '@/lib/map-page-url'
 import { searchNotion } from '@/lib/search-notion'
 import { useDarkMode } from '@/lib/use-dark-mode'
+import { BoardForumEmbed } from './BoardForumEmbed'
 
 import { Footer } from './Footer'
 import { GitHubShareButton } from './GitHubShareButton'
