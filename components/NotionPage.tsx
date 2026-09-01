@@ -4,7 +4,7 @@ import cs from 'classnames'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import Link from 'next/link'
-import { formatDate, getBlockTitle, getBlockValue } from 'notion-utils'
+import { formatDate, getBlockTitle, getBlockValue, parsePageId } from 'notion-utils'
 import * as React from 'react'
 import BodyClassName from 'react-body-classname'
 import {
@@ -27,6 +27,7 @@ import { Footer } from './Footer'
 import { GitHubShareButton } from './GitHubShareButton'
 import { NotionPageHeader } from './NotionPageHeader'
 import { PageAside } from './PageAside'
+import { PageSocial } from './PageSocial'
 
 // -----------------------------------------------------------------------------
 // dynamic imports for optional components
@@ -34,7 +35,6 @@ import { PageAside } from './PageAside'
 
 const Code = dynamic(() =>
   import('react-notion-x/third-party/code').then(async (m) => {
-    // add / remove any prism syntaxes here
     await Promise.allSettled([
       // @ts-expect-error Ignore prisma types
       import('prismjs/components/prism-markup-templating.js'),
@@ -60,7 +60,7 @@ const Code = dynamic(() =>
       import('prismjs/components/prism-diff.js'),
       // @ts-expect-error Ignore prisma types
       import('prismjs/components/prism-git.js'),
-      // @ts-expect-error Ignore prisma types
+      // @ts-expect-error Ignore prism types
       import('prismjs/components/prism-go.js'),
       // @ts-expect-error Ignore prisma types
       import('prismjs/components/prism-graphql.js'),
@@ -70,7 +70,7 @@ const Code = dynamic(() =>
       import('prismjs/components/prism-less.js'),
       // @ts-expect-error Ignore prisma types
       import('prismjs/components/prism-makefile.js'),
-      // @ts-expect-error Ignore prisma types
+      // @ts-expect-error Ignore prism types
       import('prismjs/components/prism-markdown.js'),
       // @ts-expect-error Ignore prisma types
       import('prismjs/components/prism-objectivec.js'),
@@ -92,11 +92,11 @@ const Code = dynamic(() =>
       import('prismjs/components/prism-sql.js'),
       // @ts-expect-error Ignore prisma types
       import('prismjs/components/prism-stylus.js'),
-      // @ts-expect-error Ignore prisma types
+      // @ts-expect-error Ignore prism types
       import('prismjs/components/prism-swift.js'),
       // @ts-expect-error Ignore prisma types
       import('prismjs/components/prism-wasm.js'),
-      // @ts-expect-error Ignore prisma types
+      // @ts-expect-error Ignore prism types
       import('prismjs/components/prism-yaml.js')
     ])
     return m.Code
@@ -213,8 +213,6 @@ export function NotionPage({
   const keys = Object.keys(recordMap?.block || {})
   const block = getBlockValue(recordMap?.block?.[keys[0]!])!
 
-  // const isRootPage =
-  //   parsePageId(block?.id) === parsePageId(site?.rootNotionPageId)
   const isBlogPost =
     block?.type === 'page' && block?.parent_table === 'collection'
 
@@ -230,6 +228,12 @@ export function NotionPage({
 
   const title = getBlockTitle(block, recordMap) || site.name
 
+  // Root landing page detection logic
+  const isRootPage = parsePageId(pageId) === parsePageId(site.rootNotionPageId)
+
+  // Strip emojis, non-alphanumeric characters, and trim to match Flarum tag slug (e.g., "📌 Pinboard" -> "pinboard")
+  const tag = title.replace(/[^\w\s-]/gi, '').toLowerCase().trim()
+
   React.useEffect(() => {
     console.log('notion page', {
       isDev: config.isDev,
@@ -239,7 +243,6 @@ export function NotionPage({
       recordMap
     })
 
-    // add important objects to the window global for easy debugging
     const g = window as any
     g.pageId = pageId
     g.recordMap = recordMap
@@ -251,7 +254,7 @@ export function NotionPage({
       {isLiteMode && <BodyClassName className='notion-lite' />}
 
       <NotionRenderer
-        bodyClassName={cs(pageId === site.rootNotionPageId && 'index-page')}
+        bodyClassName={cs(isRootPage && 'index-page')}
         darkMode={isDarkMode}
         components={notionRendererComponents}
         recordMap={recordMap}
@@ -271,6 +274,13 @@ export function NotionPage({
         pageAside={pageAside}
         footer={<Footer />}
       />
+
+      {/* Render full-width embedded board on nested sub-pages only */}
+      {!isRootPage && (
+        <div style={{ width: '100%', maxWidth: '1200px', margin: '2rem auto 0 auto', padding: '0 1rem' }}>
+          <PageSocial tag={tag} />
+        </div>
+      )}
 
       <GitHubShareButton />
     </>
