@@ -26,7 +26,9 @@ function ToggleThemeButton() {
       title="Toggle theme"
       style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '6px 8px', cursor: 'pointer' }}
     >
-      {hasMounted && isDarkMode ? <MoonIcon /> : <SunIcon />}
+      <span style={{ display: 'flex', width: '16px', height: '16px', alignItems: 'center', justifyContent: 'center', opacity: 0.85 }}>
+        {hasMounted && isDarkMode ? <MoonIcon /> : <SunIcon />}
+      </span>
     </div>
   )
 }
