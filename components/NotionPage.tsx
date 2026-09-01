@@ -7,6 +7,7 @@ import Link from 'next/link'
 import { formatDate, getBlockTitle, getBlockValue, parsePageId } from 'notion-utils'
 import * as React from 'react'
 import BodyClassName from 'react-body-classname'
+import { usePathname } from 'next/navigation'
 import {
   type NotionComponents,
   NotionRenderer,
@@ -198,6 +199,7 @@ export function NotionPage({
   const lite = useSearchParam('lite')
   const isLiteMode = lite === 'true'
   const { isDarkMode } = useDarkMode()
+  const pathname = usePathname()
 
   const siteMapPageUrl = React.useMemo(() => {
     const params: any = {}
@@ -224,16 +226,9 @@ export function NotionPage({
 
   const title = getBlockTitle(block, recordMap) || site.name
 
-  // Track target paths for forum embedding
-  const [showForum, setShowForum] = React.useState(false)
-
-  React.useEffect(() => {
-    const path = window.location.pathname
-    const targetPaths = ['/toolboard', '/grantboard', '/pinboard', '/chatboard']
-    if (targetPaths.some((p) => path.endsWith(p))) {
-      setShowForum(true)
-    }
-  }, [])
+  // Use Next.js hook to instantly detect target boards
+  const targetPaths = ['/toolboard', '/grantboard', '/pinboard', '/chatboard']
+  const showForum = targetPaths.some((p) => pathname?.endsWith(p))
 
   const tag = title.replace(/[^\w\s-]/gi, '').toLowerCase().trim()
 
@@ -262,7 +257,7 @@ export function NotionPage({
         footer={<Footer />}
       />
 
-      {/* Render centered FreeFlarum forum iframe specifically on the 4 target boards */}
+      {/* Render centered FreeFlarum forum iframe reactively via Next.js router */}
       {showForum && (
         <div style={{ width: '100%', maxWidth: '1200px', margin: '40px auto 0 auto', padding: '0 20px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <div style={{ width: '100%', height: '700px', border: '1px solid rgba(0, 0, 0, 0.1)', borderRadius: '8px', overflow: 'hidden', backgroundColor: '#fff' }}>
