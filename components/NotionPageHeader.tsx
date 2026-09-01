@@ -24,6 +24,7 @@ function ToggleThemeButton() {
       className={cs('breadcrumb', 'button', !hasMounted && styles.hidden)}
       onClick={onToggleTheme}
       title="Toggle theme"
+      style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '6px 8px', cursor: 'pointer' }}
     >
       {hasMounted && isDarkMode ? <MoonIcon /> : <SunIcon />}
     </div>
@@ -51,7 +52,6 @@ export function NotionPageHeader({
   return (
     <header className='notion-header'>
       <div className='notion-nav-header'>
-        {/* On nested pages, show a clean minimalist home icon button instead of text */}
         {!isRoot ? (
           <components.PageLink
             href="/"
