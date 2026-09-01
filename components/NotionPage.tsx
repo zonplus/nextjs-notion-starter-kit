@@ -253,8 +253,8 @@ export function NotionPage({
         footer={<Footer />}
       />
 
-      {/* Embedded Forum cleanly triggered via exact page ID matching */}
-      <BoardForumEmbed pageId={pageId} />
+      {/* Embedded Forum triggered cleanly via active URL pathname matching */}
+      <BoardForumEmbed />
 
       <GitHubShareButton />
     </>
