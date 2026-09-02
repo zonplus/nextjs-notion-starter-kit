@@ -47,7 +47,7 @@ export function NotionPageHeader({
   }, [])
 
   return (
-    <header className='notion-header'>
+    <header className='notion-header' style={{ background: 'lime' }}>
       <div
         className='notion-nav-header'
         style={{
@@ -61,7 +61,6 @@ export function NotionPageHeader({
           paddingRight: 0
         }}
       >
-
         {/* Left side: Home button only appears on nested pages */}
         <div style={{ display: 'flex', alignItems: 'center', minWidth: '40px', marginLeft: '-8px' }}>
           {!isRoot && (
@@ -88,7 +87,6 @@ export function NotionPageHeader({
             </components.PageLink>
           )}
         </div>
-
         {/* Right side: Only the dark mode toggle remains */}
         <div className='notion-nav-header-rhs breadcrumbs' style={{ display: 'flex', alignItems: 'center', gap: '8px', marginRight: '-8px' }}>
           <ToggleThemeButton />
