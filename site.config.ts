@@ -13,7 +13,7 @@ export default siteConfig({
   author: '',
 
   // open graph metadata (optional)
-  description: 'ZONplus Community Hub and Resources',
+  description: 'ZONplus Circles',
 
   // social usernames
   twitter: '',
@@ -34,7 +34,12 @@ export default siteConfig({
   isRedisEnabled: false,
 
   // map of notion page IDs to URL paths (optional)
-  pageUrlOverrides: null,
+  pageUrlOverrides: {
+    '/list-of-peers-and-projects-during-2023-2024': '3c8ee6ae553b8019a443ee5c5f71de31',
+    '/list-of-peers-and-projects-during-2024-2025': '980ee6ae553b82d59ed8815f6ecc9704',
+    '/list-of-peers-and-projects-during-2025-2026': '084ee6ae553b8277954701fe23853164',
+    '/list-of-peers-and-projects-during-f26': '3cfee6ae553b8091b150d4d4df1810ca'
+  },
 
   // navigation style
   navigationStyle: 'default',
