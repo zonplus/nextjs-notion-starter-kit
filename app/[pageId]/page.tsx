@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 
 import { NotionPageRoute } from '@/components/NotionPageRoute'
 import { getPageData } from '@/lib/get-page-data'
@@ -21,7 +22,7 @@ const boardMappings: Record<string, string> = {
   '3ceee6ae553b80f3beeadcc0742eb045': 'https://zonpluscircles.freeflarum.com', // Toolboard
   'toolboard': 'https://zonpluscircles.freeflarum.com',
   
-  '3ceee6ae553b8056b22edd909831dfd1': 'https://zonpluscircles.freeflarum.com', // Grantboard (update URL if you have a specific tag/category link)
+  '3ceee6ae553b8056b22edd909831dfd1': 'https://zonpluscircles.freeflarum.com', // Grantboard
   'grantboard': 'https://zonpluscircles.freeflarum.com',
   
   '3ceee6ae553b80eaa4cfcca4c6b07b59': 'https://zonpluscircles.freeflarum.com', // Pinboard
@@ -77,7 +78,38 @@ export default async function DynamicPage({ params }: DynamicPageProps) {
 
     return (
       <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', width: '100vw', margin: 0, padding: 0, overflow: 'hidden', backgroundColor: 'var(--bg-color, #fff)' }}>
-        {/* Embedded FreeFlarum Forum taking 100% of the screen without ugly home buttons */}
+        {/* Modern styled navigation header */}
+        <div style={{ 
+          display: 'flex', 
+          alignItems: 'center', 
+          justifyContent: 'space-between', 
+          padding: '12px 24px', 
+          borderBottom: '1px solid rgba(0, 0, 0, 0.08)',
+          backgroundColor: 'var(--bg-color, #ffffff)',
+          color: 'var(--fg-color, #111111)',
+          flexShrink: 0
+        }}>
+          <Link 
+            href="/" 
+            style={{ 
+              display: 'inline-flex', 
+              alignItems: 'center', 
+              gap: '6px', 
+              textDecoration: 'none', 
+              fontWeight: 500, 
+              fontSize: '14px',
+              padding: '6px 12px',
+              borderRadius: '6px',
+              backgroundColor: 'rgba(0, 0, 0, 0.04)',
+              color: 'inherit'
+            }}
+          >
+            ← Home
+          </Link>
+          <span style={{ fontSize: '13px', opacity: 0.5, fontWeight: 400 }}>ZONplus Boards</span>
+        </div>
+
+        {/* Embedded FreeFlarum Forum */}
         <iframe 
           src={forumUrl} 
           title="ZONplus Circles Forum"
