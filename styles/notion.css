@@ -11,7 +11,11 @@
    By default react-notion-x puts each property in a narrow, fixed-width label
    column beside its value, so long question names truncate and long answers get
    squeezed. This stacks them: question on its own line, answer full width
-   underneath. */
+   underneath.
+
+   The doubled selector on the title is deliberate. react-notion-x sets the
+   label width via .notion-collection-page-properties .notion-collection-column-title,
+   which outranks a plain .notion-collection-column-title rule. */
 
 .notion-collection-row-body {
   display: block;
@@ -22,15 +26,18 @@
   margin-bottom: 1.75em;
 }
 
+.notion-collection-page-properties .notion-collection-column-title,
 .notion-collection-column-title {
   display: block;
   width: 100%;
   max-width: none;
   white-space: normal;
   overflow: visible;
+  padding-left: 0;
+  margin-left: 0;
   margin-bottom: 0.4em;
   font-size: 1.05em;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--fg-color);
 }
 
@@ -38,6 +45,7 @@
   white-space: normal;
   overflow: visible;
   text-overflow: clip;
+  font-weight: 600;
 }
 
 .notion-collection-column-title-icon {
@@ -47,12 +55,14 @@
 .notion-collection-row-value {
   display: block;
   padding-left: 0;
+  margin-left: 0;
   max-width: none;
   min-height: 0;
 }
 
 .notion-collection-row-property .notion-property {
   display: block;
+  padding-left: 0;
   text-align: left;
 }
 
