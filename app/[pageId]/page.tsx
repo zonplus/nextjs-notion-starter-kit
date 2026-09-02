@@ -17,7 +17,6 @@ export const revalidate = 10
 export const dynamic = 'force-dynamic'
 export const dynamicParams = true
 
-// Map each unique Notion page ID / slug to its specific FreeFlarum destination
 const boardMappings: Record<string, string> = {
   '3ceee6ae553b80f3beeadcc0742eb045': 'https://zonpluscircles.freeflarum.com', // Toolboard
   'toolboard': 'https://zonpluscircles.freeflarum.com',
@@ -68,7 +67,6 @@ export default async function DynamicPage({ params }: DynamicPageProps) {
   const { pageId } = await params
   const cleanedId = pageId?.replace(/-/g, '').toLowerCase()
 
-  // Find matching board URL or slug
   const matchedKey = Object.keys(boardMappings).find(
     key => cleanedId === key || cleanedId?.includes(key)
   )
@@ -78,12 +76,11 @@ export default async function DynamicPage({ params }: DynamicPageProps) {
 
     return (
       <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', width: '100vw', margin: 0, padding: 0, overflow: 'hidden', backgroundColor: 'var(--bg-color, #fff)' }}>
-        {/* Modern styled navigation header */}
+        {/* Minimal navigation header with clean SVG home icon */}
         <div style={{ 
           display: 'flex', 
           alignItems: 'center', 
-          justifyContent: 'space-between', 
-          padding: '12px 24px', 
+          padding: '10px 20px', 
           borderBottom: '1px solid rgba(0, 0, 0, 0.08)',
           backgroundColor: 'var(--bg-color, #ffffff)',
           color: 'var(--fg-color, #111111)',
@@ -91,22 +88,34 @@ export default async function DynamicPage({ params }: DynamicPageProps) {
         }}>
           <Link 
             href="/" 
+            title="Home"
             style={{ 
               display: 'inline-flex', 
               alignItems: 'center', 
-              gap: '6px', 
+              justifyContent: 'center',
               textDecoration: 'none', 
-              fontWeight: 500, 
-              fontSize: '14px',
-              padding: '6px 12px',
+              padding: '6px',
               borderRadius: '6px',
               backgroundColor: 'rgba(0, 0, 0, 0.04)',
-              color: 'inherit'
+              color: 'inherit',
+              transition: 'background-color 0.2s'
             }}
           >
-            ← Home
+            {/* Outline Home Icon */}
+            <svg 
+              width="18" 
+              height="18" 
+              viewBox="0 0 24 24" 
+              fill="none" 
+              stroke="currentColor" 
+              strokeWidth="2" 
+              strokeLinecap="round" 
+              strokeLinejoin="round"
+            >
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+              <polyline points="9 22 9 12 15 12 15 22" />
+            </svg>
           </Link>
-          <span style={{ fontSize: '13px', opacity: 0.5, fontWeight: 400 }}>ZONplus Boards</span>
         </div>
 
         {/* Embedded FreeFlarum Forum */}
