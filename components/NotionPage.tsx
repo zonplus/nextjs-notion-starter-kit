@@ -202,6 +202,22 @@ export function NotionPage({
   const { isDarkMode } = useDarkMode()
   const pathname = usePathname()
 
+  // Force Notion property names to wrap and fix column width, overriding inline styles
+  React.useEffect(() => {
+    const propertyNames = document.querySelectorAll(
+      '.notion-property-name, .notion-page-property-name, [class*="property-name"]'
+    )
+    propertyNames.forEach((el) => {
+      const htmlEl = el as HTMLElement
+      htmlEl.style.whiteSpace = 'normal'
+      htmlEl.style.wordBreak = 'break-word'
+      htmlEl.style.overflowWrap = 'break-word'
+      htmlEl.style.width = '220px'
+      htmlEl.style.minWidth = '220px'
+      htmlEl.style.maxWidth = '220px'
+    })
+  }, [recordMap])
+
   const siteMapPageUrl = React.useMemo(() => {
     const params: any = {}
     if (lite) params.lite = lite
