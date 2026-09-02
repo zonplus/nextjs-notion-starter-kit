@@ -18,17 +18,21 @@ export const dynamic = 'force-dynamic'
 export const dynamicParams = true
 
 const boardMappings: Record<string, string> = {
-  '3ceee6ae553b80f3beeadcc0742eb045': 'https://zonpluscircles.freeflarum.com', // Toolboard
-  'toolboard': 'https://zonpluscircles.freeflarum.com',
+  // Toolboard
+  '3ceee6ae553b80f3beeadcc0742eb045': 'https://zonpluscircles.freeflarum.com/t/toolboard', 
+  'toolboard': 'https://zonpluscircles.freeflarum.com/t/toolboard',
   
-  '3ceee6ae553b8056b22edd909831dfd1': 'https://zonpluscircles.freeflarum.com', // Grantboard
-  'grantboard': 'https://zonpluscircles.freeflarum.com',
+  // Grantboard
+  '3ceee6ae553b8056b22edd909831dfd1': 'https://zonpluscircles.freeflarum.com/t/grantboard', 
+  'grantboard': 'https://zonpluscircles.freeflarum.com/t/grantboard',
   
-  '3ceee6ae553b80eaa4cfcca4c6b07b59': 'https://zonpluscircles.freeflarum.com', // Pinboard
-  'pinboard': 'https://zonpluscircles.freeflarum.com',
+  // Pinboard
+  '3ceee6ae553b80eaa4cfcca4c6b07b59': 'https://zonpluscircles.freeflarum.com/t/pinboard', 
+  'pinboard': 'https://zonpluscircles.freeflarum.com/t/pinboard',
   
-  '3ceee6ae553b809b928dd08b834b5606': 'https://zonpluscircles.freeflarum.com', // Chatboard
-  'chatboard': 'https://zonpluscircles.freeflarum.com'
+  // Chatboard
+  '3ceee6ae553b809b928dd08b834b5606': 'https://zonpluscircles.freeflarum.com/t/chatboard', 
+  'chatboard': 'https://zonpluscircles.freeflarum.com/t/chatboard'
 }
 
 export async function generateStaticParams() {
