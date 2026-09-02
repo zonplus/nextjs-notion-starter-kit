@@ -403,3 +403,62 @@
 .notion-equation.notion-equation-block {
   align-items: center;
 }
+
+/* ==========================================================================
+   Stacked database page properties
+   Added 2026-09-02. Delete this whole block to revert.
+
+   By default react-notion-x lays each property out as a narrow, fixed-width
+   label column beside the value. Long question names get truncated and long
+   answers get squeezed. This stacks them instead: question on its own line,
+   answer full width underneath.
+
+   Some rules above this block set the properties to display as centred flex
+   rows and hide the question label entirely. Those are deliberately undone
+   here rather than deleted, so this block stays self-contained.
+   ========================================================================== */
+
+.notion-collection-row-body {
+  display: block;
+}
+
+.notion-collection-row-property {
+  display: block;
+  margin-bottom: 1.75em;
+}
+
+.notion-collection-page-properties .notion-collection-column-title,
+.notion-collection-column-title {
+  display: block;
+  width: 100%;
+  max-width: none;
+  white-space: normal;
+  overflow: visible;
+  margin-bottom: 0.4em;
+  font-size: 1.05em;
+  font-weight: 500;
+  color: var(--fg-color);
+}
+
+.notion-collection-column-title-body {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+}
+
+.notion-collection-column-title-icon {
+  display: none;
+}
+
+.notion-collection-row-value {
+  display: block;
+  padding-left: 0;
+  max-width: none;
+  min-height: 0;
+}
+
+.notion-collection-row-property .notion-property {
+  display: block;
+  justify-content: flex-start;
+  text-align: left;
+}
