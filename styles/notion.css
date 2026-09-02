@@ -1,1 +1,66 @@
+/**
+ * Style overrides for react-notion-x.
+ *
+ * The starter kit shipped a large file of demo-site styling here. It was never
+ * loaded (the import in app/layout.tsx was commented out), so this site has
+ * always run on plain react-notion-x defaults. Rather than restore all of it,
+ * this file adds back only what this site needs.
+ */
 
+/* --- Stacked database page properties ---
+   By default react-notion-x puts each property in a narrow, fixed-width label
+   column beside its value, so long question names truncate and long answers get
+   squeezed. This stacks them: question on its own line, answer full width
+   underneath. */
+
+.notion-collection-row-body {
+  display: block;
+}
+
+.notion-collection-row-property {
+  display: block;
+  margin-bottom: 1.75em;
+}
+
+.notion-collection-column-title {
+  display: block;
+  width: 100%;
+  max-width: none;
+  white-space: normal;
+  overflow: visible;
+  margin-bottom: 0.4em;
+  font-size: 1.05em;
+  font-weight: 500;
+  color: var(--fg-color);
+}
+
+.notion-collection-column-title-body {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+}
+
+.notion-collection-column-title-icon {
+  display: none;
+}
+
+.notion-collection-row-value {
+  display: block;
+  padding-left: 0;
+  max-width: none;
+  min-height: 0;
+}
+
+.notion-collection-row-property .notion-property {
+  display: block;
+  text-align: left;
+}
+
+/* --- Duplicate title above the gallery ---
+   In Notion the page title and the database name are the same thing and show
+   once. react-notion-x renders the collection's own header above the cards as
+   well, so it appears twice. This hides the second one. */
+
+.notion-collection-header {
+  display: none;
+}
