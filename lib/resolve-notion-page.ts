@@ -58,19 +58,14 @@ export async function resolveNotionPage(
           }
         }
       } else {
-        // --- DYNAMIC FALLBACK FOR HUNDREDS OF DATABASE CARDS ---
-        // If it's not in the siteMap or overrides, try parsing or fetching directly 
-        // in case it's a valid Notion block ID passed as a slug or path suffix.
+        // --- FIXED DYNAMIC FALLBACK FOR HUNDREDS OF DATABASE CARDS ---
         try {
           const directParsedId = parsePageId(rawPageId)
-          if (directParsedId) {
-            recordMap = await getPage(directParsedId)
-            pageId = directParsedId
-          } else {
-            // Last resort: try treating rawPageId as a direct identifier slug fetch
-            recordMap = await getPage(rawPageId)
-            pageId = rawPageId
-          }
+          const targetId = directParsedId || rawPageId
+          
+          recordMap = await getPage(targetId)
+          // Ensure pageId is explicitly set to the clean target ID for ACL/formatting mapping
+          pageId = targetId
         } catch {
           return {
             error: {
@@ -79,7 +74,7 @@ export async function resolveNotionPage(
             }
           }
         }
-        // --------------------------------------------------------
+        // -------------------------------------------------------------
       }
     }
   } else {
