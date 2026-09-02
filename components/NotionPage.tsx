@@ -237,7 +237,7 @@ export function NotionPage({
           darkMode={isDarkMode}
           components={notionRendererComponents}
           recordMap={recordMap}
-          rootPageId={site.rootNotionPageId}
+          rootPageId={pageId}
           rootDomain={site.domain}
           fullPage={!isLiteMode}
           previewImages={!!recordMap.preview_images}
