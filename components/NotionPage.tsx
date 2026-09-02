@@ -229,7 +229,7 @@ export function NotionPage({
   const tag = title.replace(/[^\w\s-]/gi, '').toLowerCase().trim()
 
   return (
-    <>
+    <div className='notion notion-app'>
       {isLiteMode && <BodyClassName className='notion-lite' />}
 
       <NotionRenderer
@@ -257,6 +257,6 @@ export function NotionPage({
       <BoardForumEmbed />
 
       <GitHubShareButton />
-    </>
+    </div>
   )
 }
