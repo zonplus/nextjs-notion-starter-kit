@@ -5,9 +5,8 @@ import { includeNotionIdInUrls } from './config'
 import { getCanonicalPageId } from './get-canonical-page-id'
 import { type Site } from './types'
 
-// include UUIDs in page URLs during local development but not in production
-// (they're nice for debugging and speed up local dev)
-const uuid = !!includeNotionIdInUrls
+// Force UUIDs in URLs for all database cards/sub-pages so they can be fetched dynamically on-demand
+const uuid = true
 
 export const mapPageUrl =
   (site: Site, recordMap: ExtendedRecordMap, searchParams: URLSearchParams) =>
