@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
 
 import { NotionPageRoute } from '@/components/NotionPageRoute'
 import { getPageData } from '@/lib/get-page-data'
@@ -17,14 +16,20 @@ export const revalidate = 10
 export const dynamic = 'force-dynamic'
 export const dynamicParams = true
 
-const targetBoardIds = [
-  '3ceee6ae553b80f3beeadcc0742eb045', // Toolboard
-  '3ceee6ae553b8056b22edd909831dfd1', // Grantboard
-  '3ceee6ae553b80eaa4cfcca4c6b07b59', // Pinboard
-  '3ceee6ae553b809b928dd08b834b5606'  // Chatboard
-]
-
-const targetSlugs = ['toolboard', 'grantboard', 'pinboard', 'chatboard']
+// Map each unique Notion page ID / slug to its specific FreeFlarum destination
+const boardMappings: Record<string, string> = {
+  '3ceee6ae553b80f3beeadcc0742eb045': 'https://zonpluscircles.freeflarum.com', // Toolboard
+  'toolboard': 'https://zonpluscircles.freeflarum.com',
+  
+  '3ceee6ae553b8056b22edd909831dfd1': 'https://zonpluscircles.freeflarum.com', // Grantboard (update URL if you have a specific tag/category link)
+  'grantboard': 'https://zonpluscircles.freeflarum.com',
+  
+  '3ceee6ae553b80eaa4cfcca4c6b07b59': 'https://zonpluscircles.freeflarum.com', // Pinboard
+  'pinboard': 'https://zonpluscircles.freeflarum.com',
+  
+  '3ceee6ae553b809b928dd08b834b5606': 'https://zonpluscircles.freeflarum.com', // Chatboard
+  'chatboard': 'https://zonpluscircles.freeflarum.com'
+}
 
 export async function generateStaticParams() {
   if (isDev) {
@@ -48,7 +53,7 @@ export async function generateMetadata({
   const { pageId } = await params
   const cleanedId = pageId?.replace(/-/g, '').toLowerCase()
 
-  if (targetBoardIds.includes(cleanedId) || targetSlugs.some(slug => cleanedId?.includes(slug))) {
+  if (boardMappings[cleanedId] || Object.keys(boardMappings).some(k => cleanedId?.includes(k))) {
     return {
       title: 'ZONplus Circles Forum',
       description: 'Collaborative discussion board'
@@ -62,24 +67,19 @@ export default async function DynamicPage({ params }: DynamicPageProps) {
   const { pageId } = await params
   const cleanedId = pageId?.replace(/-/g, '').toLowerCase()
 
-  const isTargetBoard = 
-    targetBoardIds.includes(cleanedId) || 
-    targetSlugs.some(slug => cleanedId?.includes(slug))
+  // Find matching board URL or slug
+  const matchedKey = Object.keys(boardMappings).find(
+    key => cleanedId === key || cleanedId?.includes(key)
+  )
 
-  if (isTargetBoard) {
+  if (matchedKey) {
+    const forumUrl = boardMappings[matchedKey]
+
     return (
       <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', width: '100vw', margin: 0, padding: 0, overflow: 'hidden', backgroundColor: 'var(--bg-color, #fff)' }}>
-        <div style={{ display: 'flex', alignItems: 'center', padding: '10px 20px', borderBottom: '1px solid rgba(0,0,0,0.1)' }}>
-          <Link 
-            href="/" 
-            style={{ display: 'flex', alignItems: 'center', gap: '6px', textDecoration: 'none', fontWeight: 500, color: 'inherit', fontSize: '14px' }}
-          >
-            🏠 Home
-          </Link>
-        </div>
-
+        {/* Embedded FreeFlarum Forum taking 100% of the screen without ugly home buttons */}
         <iframe 
-          src="https://zonpluscircles.freeflarum.com" 
+          src={forumUrl} 
           title="ZONplus Circles Forum"
           style={{ flex: 1, width: '100%', border: 'none' }}
         />
