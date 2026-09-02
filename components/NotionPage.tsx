@@ -229,29 +229,31 @@ export function NotionPage({
   const tag = title.replace(/[^\w\s-]/gi, '').toLowerCase().trim()
 
   return (
-    <div className='notion notion-app'>
+    <div className={cs('notion-app', { 'dark-mode': isDarkMode })}>
       {isLiteMode && <BodyClassName className='notion-lite' />}
 
-      <NotionRenderer
-        darkMode={isDarkMode}
-        components={notionRendererComponents}
-        recordMap={recordMap}
-        rootPageId={site.rootNotionPageId}
-        rootDomain={site.domain}
-        fullPage={!isLiteMode}
-        previewImages={!!recordMap.preview_images}
-        showCollectionViewDropdown={false}
-        showTableOfContents={showTableOfContents}
-        minTableOfContentsItems={minTableOfContentsItems}
-        defaultPageIcon={config.defaultPageIcon}
-        defaultPageCover={config.defaultPageCover}
-        defaultPageCoverPosition={config.defaultPageCoverPosition}
-        mapPageUrl={siteMapPageUrl}
-        mapImageUrl={mapImageUrl}
-        searchNotion={config.isSearchEnabled ? searchNotion : undefined}
-        pageAside={pageAside}
-        footer={<Footer />}
-      />
+      <div className='notion notion-page'>
+        <NotionRenderer
+          darkMode={isDarkMode}
+          components={notionRendererComponents}
+          recordMap={recordMap}
+          rootPageId={site.rootNotionPageId}
+          rootDomain={site.domain}
+          fullPage={!isLiteMode}
+          previewImages={!!recordMap.preview_images}
+          showCollectionViewDropdown={false}
+          showTableOfContents={showTableOfContents}
+          minTableOfContentsItems={minTableOfContentsItems}
+          defaultPageIcon={config.defaultPageIcon}
+          defaultPageCover={config.defaultPageCover}
+          defaultPageCoverPosition={config.defaultPageCoverPosition}
+          mapPageUrl={siteMapPageUrl}
+          mapImageUrl={mapImageUrl}
+          searchNotion={config.isSearchEnabled ? searchNotion : undefined}
+          pageAside={pageAside}
+          footer={<Footer />}
+        />
+      </div>
 
       {/* Embedded Forum triggered cleanly via active URL pathname matching */}
       <BoardForumEmbed />
