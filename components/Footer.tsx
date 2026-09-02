@@ -10,24 +10,18 @@ const footerStyle = {
   paddingRight: 'max(calc(2vw - 8px), 0px)'
 }
 
-const copyrightStyle = { paddingLeft: '8px' }
-
-const linkStyle = {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  padding: '6px 8px',
-  color: 'inherit'
-}
-
+const textStyle = { paddingLeft: '8px' }
+const linkStyle = { display: 'flex', alignItems: 'center', padding: '6px 8px', color: 'inherit' }
 const iconStyle = { opacity: 0.85 }
 
-export function FooterImpl() {
+const IG = 'https://www.instagram.com/tmuzonplus/'
+
+export const Footer = React.memo(function Footer() {
   return (
     <footer className={styles.footer} style={footerStyle}>
-      <div className={styles.copyright} style={copyrightStyle}>Made with 😊</div>
+      <div className={styles.copyright} style={textStyle}>Made with 😊</div>
       <div className={styles.social}>
-        <a href='https://www.instagram.com/tmuzonplus/' title='Instagram @tmuzonplus' target='_blank' rel='noopener noreferrer' style={linkStyle}>
+        <a href={IG} title='Instagram @tmuzonplus' target='_blank' rel='noopener noreferrer' style={linkStyle}>
           <svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round' style={iconStyle}>
             <rect x='2' y='2' width='20' height='20' rx='5' ry='5' />
             <path d='M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z' />
@@ -35,3 +29,6 @@ export function FooterImpl() {
           </svg>
         </a>
       </div>
+    </footer>
+  )
+})
