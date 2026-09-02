@@ -34,7 +34,6 @@ export function NotionPageHeader({
 }) {
   const { components } = useNotionContext()
   const [isRoot, setIsRoot] = React.useState(true)
-  const navRef = React.useRef<HTMLDivElement>(null)
 
   React.useEffect(() => {
     const updateRootState = () => {
@@ -47,22 +46,9 @@ export function NotionPageHeader({
     return () => window.removeEventListener('popstate', updateRootState)
   }, [])
 
-  // Applied after mount with setProperty so the !important priority sticks,
-  // which a React style prop cannot express on its own.
-  React.useEffect(() => {
-    const el = navRef.current
-    if (!el) return
-    el.style.setProperty('max-width', 'var(--notion-max-width, 720px)', 'important')
-    el.style.setProperty('margin-left', 'auto', 'important')
-    el.style.setProperty('margin-right', 'auto', 'important')
-    el.style.setProperty('padding-left', '0px', 'important')
-    el.style.setProperty('padding-right', '0px', 'important')
-  })
-
   return (
-    <header className='notion-header' style={{ background: 'lime' }}>
+    <header className='notion-header'>
       <div
-        ref={navRef}
         className='notion-nav-header'
         style={{
           display: 'flex',
@@ -71,12 +57,16 @@ export function NotionPageHeader({
           width: '100%',
           maxWidth: 'var(--notion-max-width, 720px)',
           margin: '0 auto',
-          paddingLeft: 0,
-          paddingRight: 0
+          // Matches the horizontal padding .notion-page applies to the text
+          // column, so the icons line up with the text rather than the window.
+          // The 8px offset cancels each button's own padding, aligning the
+          // icon's visible edge instead of its click area.
+          paddingLeft: 'max(calc(2vw - 8px), 0px)',
+          paddingRight: 'max(calc(2vw - 8px), 0px)'
         }}
       >
         {/* Left side: Home button only appears on nested pages */}
-        <div style={{ display: 'flex', alignItems: 'center', minWidth: '40px', marginLeft: '-8px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', minWidth: '40px' }}>
           {!isRoot && (
             <components.PageLink
               href="/"
@@ -102,7 +92,7 @@ export function NotionPageHeader({
           )}
         </div>
         {/* Right side: Only the dark mode toggle remains */}
-        <div className='notion-nav-header-rhs breadcrumbs' style={{ display: 'flex', alignItems: 'center', gap: '8px', marginRight: '-8px' }}>
+        <div className='notion-nav-header-rhs breadcrumbs' style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <ToggleThemeButton />
         </div>
       </div>
