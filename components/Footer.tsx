@@ -1,53 +1,41 @@
 import * as React from 'react'
-import * as config from '@/lib/config'
-import { GitHubIcon } from '@/lib/icons/github'
-import { LinkedInIcon } from '@/lib/icons/linkedin'
-import { TwitterIcon } from '@/lib/icons/twitter'
 import styles from './styles.module.css'
 
 export function FooterImpl() {
   return (
     <footer className={styles.footer}>
-      <div className={styles.copyright}>
-        Made with 😊
-      </div>
-      <div className={styles.settings}>
-        {/* Dark mode toggle removed to prevent duplicates */}
-      </div>
+      <div className={styles.copyright}>Made with 😊</div>
+
       <div className={styles.social}>
-        {config.twitter && (
-          
-            className={styles.twitter}
-            href={`https://x.com/${config.twitter}`}
-            title={`X @${config.twitter}`}
-            target='_blank'
-            rel='noopener noreferrer'
+        
+          href='https://www.instagram.com/tmuzonplus/'
+          title='Instagram @tmuzonplus'
+          target='_blank'
+          rel='noopener noreferrer'
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '6px 8px',
+            color: 'inherit'
+          }}
+        >
+          <svg
+            width='16'
+            height='16'
+            viewBox='0 0 24 24'
+            fill='none'
+            stroke='currentColor'
+            strokeWidth='2'
+            strokeLinecap='round'
+            strokeLinejoin='round'
+            style={{ opacity: 0.85 }}
           >
-            <TwitterIcon />
-          </a>
-        )}
-        {config.github && (
-          
-            className={styles.github}
-            href={`https://github.com/${config.github}`}
-            title={`GitHub @${config.github}`}
-            target='_blank'
-            rel='noopener noreferrer'
-          >
-            <GitHubIcon />
-          </a>
-        )}
-        {config.linkedin && (
-          
-            className={styles.linkedin}
-            href={`https://www.linkedin.com/in/${config.linkedin}`}
-            title={`LinkedIn ${config.author}`}
-            target='_blank'
-            rel='noopener noreferrer'
-          >
-            <LinkedInIcon />
-          </a>
-        )}
+            <rect x='2' y='2' width='20' height='20' rx='5' ry='5' />
+            <path d='M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z' />
+            <line x1='17.5' y1='6.5' x2='17.51' y2='6.5' />
+          </svg>
+        </a>
       </div>
     </footer>
   )
