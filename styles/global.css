@@ -118,15 +118,30 @@ body.index-page .notion-nav-header-rhs .breadcrumb:has(svg) {
   display: none !important;
 }
 
-/* --- Fix for Notion Property Label Truncation (`react-notion-x`) --- */
-.notion-page-property-name {
-  width: auto !important;
-  max-width: 320px !important; /* Adjust this width if you need more room */
-  white-space: normal !important;
-  word-break: break-word !important;
+/* --- Comprehensive Fix for Notion Property Label Truncation (`react-notion-x`) --- */
+.notion-page-properties {
+  max-width: 100% !important;
 }
 
 .notion-property {
+  display: flex !important;
+  align-items: flex-start !important;
+  white-space: normal !important;
+}
+
+.notion-property-name,
+.notion-page-property-name,
+div[class*='property-name'] {
+  width: auto !important;
+  min-width: 200px !important;
+  max-width: 100% !important;
+  white-space: normal !important;
+  word-break: break-word !important;
+  text-overflow: clip !important;
+  overflow: visible !important;
+}
+
+.notion-property-view {
   white-space: normal !important;
   word-break: break-word !important;
 }
