@@ -74,3 +74,15 @@
 .notion-collection-header {
   display: none;
 }
+
+/* --- Header icons aligned to the text column ---
+   The nav bar spans the full window with its own padding, so the home icon and
+   the theme toggle sit outside the page's text column. Constraining the bar to
+   the same width as the content lines them up with the text edges. */
+
+.notion-header .notion-nav-header {
+  max-width: var(--notion-max-width, 720px);
+  margin: 0 auto;
+  padding-left: 0;
+  padding-right: 0;
+}
