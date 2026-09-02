@@ -18,19 +18,12 @@ export const dynamic = 'force-dynamic'
 export const dynamicParams = true
 
 const boardMappings: Record<string, string> = {
-  // Toolboard
   '3ceee6ae553b80f3beeadcc0742eb045': 'https://zonpluscircles.freeflarum.com/t/toolboard', 
   'toolboard': 'https://zonpluscircles.freeflarum.com/t/toolboard',
-  
-  // Grantboard
   '3ceee6ae553b8056b22edd909831dfd1': 'https://zonpluscircles.freeflarum.com/t/grantboard', 
   'grantboard': 'https://zonpluscircles.freeflarum.com/t/grantboard',
-  
-  // Pinboard
   '3ceee6ae553b80eaa4cfcca4c6b07b59': 'https://zonpluscircles.freeflarum.com/t/pinboard', 
   'pinboard': 'https://zonpluscircles.freeflarum.com/t/pinboard',
-  
-  // Chatboard
   '3ceee6ae553b809b928dd08b834b5606': 'https://zonpluscircles.freeflarum.com/t/chatboard', 
   'chatboard': 'https://zonpluscircles.freeflarum.com/t/chatboard'
 }
@@ -64,7 +57,15 @@ export async function generateMetadata({
     }
   }
 
-  return createPageMetadata(await getPageData(pageId))
+  try {
+    const pageData = await getPageData(pageId)
+    return createPageMetadata(pageData)
+  } catch {
+    return {
+      title: 'ZONplus Circles',
+      description: 'Collaborative curriculum and student-led project frameworks'
+    }
+  }
 }
 
 export default async function DynamicPage({ params }: DynamicPageProps) {
@@ -80,7 +81,6 @@ export default async function DynamicPage({ params }: DynamicPageProps) {
 
     return (
       <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', width: '100vw', margin: 0, padding: 0, overflow: 'hidden', backgroundColor: 'var(--bg-color, #fff)' }}>
-        {/* Minimal navigation header with clean SVG home icon */}
         <div style={{ 
           display: 'flex', 
           alignItems: 'center', 
@@ -105,24 +105,13 @@ export default async function DynamicPage({ params }: DynamicPageProps) {
               transition: 'background-color 0.2s'
             }}
           >
-            {/* Outline Home Icon */}
-            <svg 
-              width="18" 
-              height="18" 
-              viewBox="0 0 24 24" 
-              fill="none" 
-              stroke="currentColor" 
-              strokeWidth="2" 
-              strokeLinecap="round" 
-              strokeLinejoin="round"
-            >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
               <polyline points="9 22 9 12 15 12 15 22" />
             </svg>
           </Link>
         </div>
 
-        {/* Embedded FreeFlarum Forum */}
         <iframe 
           src={forumUrl} 
           title="ZONplus Circles Forum"
@@ -132,6 +121,17 @@ export default async function DynamicPage({ params }: DynamicPageProps) {
     )
   }
 
-  const pageProps = await getPageData(pageId)
-  return <NotionPageRoute pageProps={pageProps} />
+  try {
+    const pageProps = await getPageData(pageId)
+    return <NotionPageRoute pageProps={pageProps} />
+  } catch (error) {
+    // Fallback error screen if Notion block fetch fails
+    return (
+      <div style={{ padding: '40px', textAlign: 'center', fontFamily: 'sans-serif' }}>
+        <h2>Unable to load card</h2>
+        <p>This item could not be retrieved from Notion. Please verify the page is publicly shared.</p>
+        <p><Link href="/">Return to Home</Link></p>
+      </div>
+    )
+  }
 }
