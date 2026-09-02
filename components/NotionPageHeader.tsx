@@ -34,6 +34,7 @@ export function NotionPageHeader({
 }) {
   const { components } = useNotionContext()
   const [isRoot, setIsRoot] = React.useState(true)
+  const navRef = React.useRef<HTMLDivElement>(null)
 
   React.useEffect(() => {
     const updateRootState = () => {
@@ -46,9 +47,22 @@ export function NotionPageHeader({
     return () => window.removeEventListener('popstate', updateRootState)
   }, [])
 
+  // Applied after mount with setProperty so the !important priority sticks,
+  // which a React style prop cannot express on its own.
+  React.useEffect(() => {
+    const el = navRef.current
+    if (!el) return
+    el.style.setProperty('max-width', 'var(--notion-max-width, 720px)', 'important')
+    el.style.setProperty('margin-left', 'auto', 'important')
+    el.style.setProperty('margin-right', 'auto', 'important')
+    el.style.setProperty('padding-left', '0px', 'important')
+    el.style.setProperty('padding-right', '0px', 'important')
+  })
+
   return (
     <header className='notion-header' style={{ background: 'lime' }}>
       <div
+        ref={navRef}
         className='notion-nav-header'
         style={{
           display: 'flex',
