@@ -6,8 +6,8 @@ import 'prismjs/themes/prism-coy.css'
 import 'react-notion-x/styles.css'
 // global styles shared across the entire site
 import '@/styles/global.css'
-// global style overrides for notion
-import '@/styles/notion.css'
+// global style overrides for notion (temporarily commented out for testing)
+// import '@/styles/notion.css'
 // global style overrides for prism theme (optional)
 import '@/styles/prism-theme.css'
 
