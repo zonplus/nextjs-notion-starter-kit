@@ -164,3 +164,27 @@
 .notion-page-icon-hero {
   transform: translateX(-50%);
 }
+
+/* --- Safari-only fallback for the callout height bug ---
+   react-notion-x renders .notion-callout as display: inline-flex. On Safari
+   (desktop and iOS), an inline-flex container with wrapped text sometimes
+   doesn't recompute its height when the content wraps to an extra line at
+   narrow widths, so the box stays sized for one fewer line than it holds.
+   Chrome doesn't have this bug, which is why this only showed on an iPhone,
+   not in Chrome's device emulator at the same width.
+
+   @supports (-webkit-touch-callout: none) matches Safari only, since that
+   property is Safari/WebKit-specific. Switching to plain flex, rather than
+   inline-flex, avoids the bug without changing how any other browser renders
+   the callout. */
+
+@supports (-webkit-touch-callout: none) {
+  .notion-callout {
+    display: flex;
+    min-height: 0;
+  }
+
+  .notion-callout-text {
+    min-height: 0;
+  }
+}
