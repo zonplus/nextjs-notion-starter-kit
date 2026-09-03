@@ -81,12 +81,17 @@ export default async function DynamicPage({ params }: DynamicPageProps) {
 
     return (
       <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', width: '100vw', margin: 0, padding: 0, overflow: 'hidden', backgroundColor: 'var(--bg-color, #fff)' }}>
-        <div style={{ 
-          display: 'flex', 
-          alignItems: 'center', 
-          padding: '10px 20px', 
-          borderBottom: '1px solid rgba(0, 0, 0, 0.08)',
-          backgroundColor: 'var(--bg-color, #ffffff)',
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          width: '100%',
+          maxWidth: 'var(--notion-max-width, 720px)',
+          marginLeft: 'auto',
+          marginRight: 'auto',
+          paddingLeft: 'max(calc(2vw - 8px), 0px)',
+          paddingRight: 'max(calc(2vw - 8px), 0px)',
+          paddingTop: '12px',
+          paddingBottom: '12px',
           color: 'var(--fg-color, #111111)',
           flexShrink: 0
         }}>
@@ -94,18 +99,15 @@ export default async function DynamicPage({ params }: DynamicPageProps) {
             href="/" 
             title="Home"
             style={{ 
-              display: 'inline-flex', 
+              display: 'flex', 
               alignItems: 'center', 
               justifyContent: 'center',
               textDecoration: 'none', 
-              padding: '6px',
-              borderRadius: '6px',
-              backgroundColor: 'rgba(0, 0, 0, 0.04)',
-              color: 'inherit',
-              transition: 'background-color 0.2s'
+              padding: '6px 8px',
+              color: 'inherit'
             }}
           >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.85 }}>
               <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
               <polyline points="9 22 9 12 15 12 15 22" />
             </svg>
