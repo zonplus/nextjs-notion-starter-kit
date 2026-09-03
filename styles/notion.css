@@ -142,6 +142,17 @@
   height: 100%;
 }
 
+/* The callout's own height was correct (65px, tall enough for three lines),
+   but its direct child .notion-callout-text was still stuck at one line's
+   height (31px), invisibly clipping the wrapped text even though the parent
+   had room. .notion-callout-text needs its own explicit height: auto, since
+   inheriting from a correctly-sized parent isn't automatic in a flex layout. */
+
+.notion-callout-text {
+  height: auto;
+  min-height: 0;
+}
+
 /* --- Centre the page icon ---
    The starter kit centred hero page icons and this file lost that rule when it
    was rebuilt from empty. Emoji icons happen to sit centred anyway; an image
@@ -163,28 +174,4 @@
 
 .notion-page-icon-hero {
   transform: translateX(-50%);
-}
-
-/* --- Safari-only fallback for the callout height bug ---
-   react-notion-x renders .notion-callout as display: inline-flex. On Safari
-   (desktop and iOS), an inline-flex container with wrapped text sometimes
-   doesn't recompute its height when the content wraps to an extra line at
-   narrow widths, so the box stays sized for one fewer line than it holds.
-   Chrome doesn't have this bug, which is why this only showed on an iPhone,
-   not in Chrome's device emulator at the same width.
-
-   @supports (-webkit-touch-callout: none) matches Safari only, since that
-   property is Safari/WebKit-specific. Switching to plain flex, rather than
-   inline-flex, avoids the bug without changing how any other browser renders
-   the callout. */
-
-@supports (-webkit-touch-callout: none) {
-  .notion-callout {
-    display: flex;
-    min-height: 0;
-  }
-
-  .notion-callout-text {
-    min-height: 0;
-  }
 }
