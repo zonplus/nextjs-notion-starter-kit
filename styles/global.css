@@ -97,4 +97,50 @@ html body .notion-page {
   margin: 0 auto !important;
 }
 
-html body .notion-page-content
+html body .notion-page-content {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+html body .notion-page-content-has-aside {
+  width: 100% !important;
+  max-width: 100% !important;
+  padding-right: 0 !important;
+  margin-right: 0 !important;
+}
+
+/* Hide duplicate top-left title breadcrumb and search trigger on the homepage */
+body.index-page .notion-header .notion-nav-header > div:first-child,
+body.index-page .notion-header .search-button,
+body.index-page .notion-nav-header-rhs .breadcrumb:has(svg) {
+  display: none !important;
+}
+
+/* --- Comprehensive Fix for Notion Property Label Wrapping (`react-notion-x`) --- */
+.notion-page-properties {
+  max-width: 100% !important;
+}
+
+.notion-page-properties .notion-property {
+  display: flex !important;
+  align-items: flex-start !important;
+  white-space: normal !important;
+}
+
+.notion-page-properties .notion-property-name,
+.notion-page-properties .notion-page-property-name,
+.notion-page-properties div[class*='property-name'] {
+  width: 220px !important;
+  min-width: 220px !important;
+  max-width: 220px !important;
+  white-space: normal !important;
+  word-break: break-word !important;
+  overflow-wrap: break-word !important;
+  text-overflow: clip !important;
+  overflow: visible !important;
+}
+
+.notion-property-view {
+  white-space: normal !important;
+  word-break: break-word !important;
+}
