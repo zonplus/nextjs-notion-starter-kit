@@ -142,15 +142,24 @@
   height: 100%;
 }
 
-/* The callout's own height was correct (65px, tall enough for three lines),
-   but its direct child .notion-callout-text was still stuck at one line's
-   height (31px), invisibly clipping the wrapped text even though the parent
-   had room. .notion-callout-text needs its own explicit height: auto, since
-   inheriting from a correctly-sized parent isn't automatic in a flex layout. */
+/* The callout's own height measured correctly (65px, tall enough for three
+   lines), but its direct child .notion-callout-text was still stuck at one
+   line's height (31px), invisibly clipping the wrapped text even though the
+   parent had room. Forcing height: auto on that one element alone did not
+   change anything when tested live, which means the real constraint sits
+   somewhere else in this chain: the callout, the text wrapper, the page-link
+   anchor inside it, or the title span. Rather than keep isolating which one,
+   this forces every link in the chain to auto height at once, with !important
+   so nothing upstream can win by specificity. */
 
-.notion-callout-text {
-  height: auto;
-  min-height: 0;
+.notion-callout,
+.notion-callout-text,
+.notion-callout .notion-page-link,
+.notion-callout .notion-page-title-text {
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  overflow: visible !important;
 }
 
 /* --- Centre the page icon ---
