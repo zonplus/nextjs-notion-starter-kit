@@ -75,14 +75,35 @@
   display: none;
 }
 
-/* --- Header icons aligned to the text column ---
-   The nav bar spans the full window with its own padding, so the home icon and
-   the theme toggle sit outside the page's text column. Constraining the bar to
-   the same width as the content lines them up with the text edges. */
+/* --- Equal-height callouts across a column row ---
+   In Notion, columns in a row stretch to match the tallest one, so two
+   callouts side by side share a height even when one wraps to more lines.
+   react-notion-x leaves them at their natural height. The chain has to run all
+   the way down: the row stretches its columns, each column stretches the block
+   inside it, and the callout fills that height. */
 
-.notion-header .notion-nav-header {
-  max-width: var(--notion-max-width, 720px);
-  margin: 0 auto;
-  padding-left: 0;
-  padding-right: 0;
+.notion-row {
+  align-items: stretch;
+}
+
+.notion-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.notion-column > .notion-block,
+.notion-column > .notion-callout {
+  flex: 1;
+}
+
+.notion-column .notion-callout {
+  height: 100%;
+}
+
+/* --- Trim the page's bottom padding ---
+   The starter kit reserves a large viewport-relative gap below every page,
+   which leaves a wide empty band above the footer on short pages. */
+
+.notion-page {
+  padding-bottom: 2em;
 }
