@@ -13,7 +13,7 @@ const footerStyle = {
 }
 
 const textStyle = { paddingLeft: '8px' }
-const linkStyle = { display: 'flex', alignItems: 'center', padding: '6px 8px' }
+const linkStyle = { display: 'flex', alignItems: 'center', padding: '6px 8px', color: 'var(--fg-color)' }
 
 const IG = 'https://www.instagram.com/tmuzonplus/'
 
@@ -24,9 +24,9 @@ export const Footer = React.memo(function Footer() {
       <div className={styles.social}>
         <a href={IG} title='Instagram @tmuzonplus' target='_blank' rel='noopener noreferrer' style={linkStyle}>
           <svg width='16' height='16' viewBox='0 0 24 24' style={{ display: 'block', opacity: 0.85 }}>
-            <rect x='2' y='2' width='20' height='20' rx='5' ry='5' fill='none' stroke='#37352f' strokeWidth='2' />
-            <circle cx='12' cy='12' r='4' fill='none' stroke='#37352f' strokeWidth='2' />
-            <circle cx='17.5' cy='6.5' r='1.2' fill='#37352f' />
+            <rect x='2' y='2' width='20' height='20' rx='5' ry='5' fill='none' stroke='currentColor' strokeWidth='2' />
+            <circle cx='12' cy='12' r='4' fill='none' stroke='currentColor' strokeWidth='2' />
+            <circle cx='17.5' cy='6.5' r='1.2' fill='currentColor' />
           </svg>
         </a>
       </div>
