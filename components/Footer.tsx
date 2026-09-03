@@ -2,6 +2,7 @@ import * as React from 'react'
 import styles from './styles.module.css'
 
 const footerStyle = {
+  background: 'lime',
   width: '100%',
   maxWidth: 'var(--notion-max-width, 720px)',
   marginLeft: 'auto',
