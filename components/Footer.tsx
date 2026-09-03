@@ -12,7 +12,7 @@ const footerStyle = {
 
 const textStyle = { paddingLeft: '8px' }
 const linkStyle = { display: 'flex', alignItems: 'center', padding: '6px 8px', color: 'inherit' }
-const iconStyle = { opacity: 0.85 }
+const iconStyle = { opacity: 0.85, color: 'red' }
 
 const IG = 'https://www.instagram.com/tmuzonplus/'
 
