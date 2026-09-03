@@ -184,3 +184,13 @@
 .notion-page-icon-hero {
   transform: translateX(-50%);
 }
+
+/* --- Remove the starter kit's "View source on GitHub" corner ribbon ---
+   Baked into the starter kit's own page layout, not something added for this
+   site. Targeted by its own class name rather than by matching its href, so
+   it can't accidentally catch an unrelated link the way an href-substring
+   rule did earlier for LinkedIn. */
+
+.githubCorner {
+  display: none !important;
+}
