@@ -107,3 +107,44 @@
 .notion-page {
   padding-bottom: 2em;
 }
+
+/* --- Page link titles wrap on narrow screens ---
+   react-notion-x sets white-space: nowrap on page-link titles, which is fine
+   on a wide page but runs off the edge of a phone. Letting them wrap keeps the
+   callouts and inline page links inside the screen. */
+
+.notion-page-link .notion-page-title-text,
+.notion-page-title-text,
+.notion-link .notion-page-title-text {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+  border-bottom-width: 1px;
+}
+
+.notion-page-link,
+.notion-callout .notion-page-link {
+  align-items: flex-start;
+  max-width: 100%;
+}
+
+.notion-callout {
+  max-width: 100%;
+  overflow-wrap: break-word;
+}
+
+/* --- Centre the page icon ---
+   The starter kit centred hero page icons and this file lost that rule when it
+   was rebuilt. Emoji icons happen to sit centred anyway; an image icon does
+   not, which is why only the landing page looked off. */
+
+.notion .notion-page-icon-hero,
+.notion .notion-page-icon-cover {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.notion-page-icon-hero {
+  display: flex;
+  justify-content: center;
+}
