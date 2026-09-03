@@ -152,3 +152,15 @@
   margin-left: auto;
   margin-right: auto;
 }
+
+/* --- Fix the icon centring: transform, not margin ---
+   react-notion-x positions the hero icon with position: absolute and
+   left: 50%, which is normally paired with a transform pulling it back by
+   half its own width. That transform isn't landing on this build, so the
+   icon sits offset to the right by half its width. margin: auto above has no
+   effect on an absolutely positioned element, so this is the rule that
+   actually recentres it. */
+
+.notion-page-icon-hero {
+  transform: translateX(-50%);
+}
